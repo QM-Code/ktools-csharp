@@ -16,7 +16,7 @@
     ],
     "demo_root": "demo",
     "assembly_name": "Kcli",
-    "target_framework": "net8.0"
+    "target_framework": "net10.0"
   },
   "build": {
     "demos": [

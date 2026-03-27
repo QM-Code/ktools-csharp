@@ -1,0 +1,10 @@
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib/Kcli.deps.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib/Kcli.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib/Kcli.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/Kcli.GeneratedMSBuildEditorConfig.editorconfig
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/Kcli.csproj.CoreCompileInputs.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/Kcli.sourcelink.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/Kcli.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/refint/Kcli.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/Kcli.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk/ref/Kcli.dll

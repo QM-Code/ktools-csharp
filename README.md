@@ -6,27 +6,28 @@ It is the root entrypoint for the C# implementations of the ktools libraries.
 
 ## Current Contents
 
-- `kbuild/`
-  Local C#-workspace copy of the shared build tool, extended modularly for C#.
 - `kcli/`
   C# implementation of the CLI parsing layer.
 - `ktrace/`
   C# implementation of the tracing/logging layer built on top of `kcli`.
 
+The shared build tool is `kbuild`, expected on `PATH`. If you need to modify
+the shared build implementation itself, that repo lives at [`../kbuild`](../kbuild).
+
 ## Build Model
 
-Use the local `kbuild` copy as the workspace entrypoint:
+Use `kbuild` from `PATH` as the workspace entrypoint:
 
 ```bash
-python3 kbuild/kbuild.py --batch --build-latest
-python3 kbuild/kbuild.py --batch --clean-latest
+kbuild --batch --build-latest
+kbuild --batch --clean-latest
 ```
 
 Use an individual child repo when you only need one SDK:
 
 ```bash
 cd kcli
-python3 ../kbuild/kbuild.py --build-latest
+kbuild --build-latest
 ```
 
 The C# backend currently expects the `dotnet` CLI to be available for actual builds.

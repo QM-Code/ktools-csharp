@@ -12,6 +12,8 @@ It keeps the same core model used across the ecosystem:
 ## Start Here
 
 - [API guide](api.md)
+- [Parsing behavior](behavior.md)
+- [Examples](examples.md)
 
 ## Typical Flow
 
@@ -68,6 +70,7 @@ Use `ParseOrThrow()` when:
 
 - [`src/Kcli/Kcli.cs`](../src/Kcli/Kcli.cs)
 - [`tests/src/Kcli.Tests/Program.cs`](../tests/src/Kcli.Tests/Program.cs)
+- [`demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs`](../demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs)
 - [`demo/bootstrap/src/Kcli/Demo/Bootstrap/Program.cs`](../demo/bootstrap/src/Kcli/Demo/Bootstrap/Program.cs)
 - [`demo/exe/core/src/Kcli/Demo/Core/Program.cs`](../demo/exe/core/src/Kcli/Demo/Core/Program.cs)
 - [`demo/exe/omega/src/Kcli/Demo/Omega/Program.cs`](../demo/exe/omega/src/Kcli/Demo/Omega/Program.cs)

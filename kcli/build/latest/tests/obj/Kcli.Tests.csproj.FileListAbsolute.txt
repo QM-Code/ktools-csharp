@@ -1,0 +1,14 @@
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/bin/Kcli.Tests.deps.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/bin/Kcli.Tests.runtimeconfig.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/bin/Kcli.Tests.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/bin/Kcli.Tests.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.csproj.AssemblyReference.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.csproj.CoreCompileInputs.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.sourcelink.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.csproj.Up2Date
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/refint/Kcli.Tests.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/Kcli.Tests.genruntimeconfig.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/obj/ref/Kcli.Tests.dll

@@ -936,10 +936,6 @@ internal static class ParseEngine
             {
                 result.ReportError(invocation.Option, FormatOptionErrorMessage(invocation.Option, ex.Message));
             }
-            catch
-            {
-                result.ReportError(invocation.Option, FormatOptionErrorMessage(invocation.Option, "unknown exception while handling option"));
-            }
         }
     }
 

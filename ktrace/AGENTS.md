@@ -3,7 +3,6 @@
 Assume these have already been read:
 
 - `../../ktools/AGENTS.md`
-- `../../ktrace/AGENTS.md`
 - `../AGENTS.md`
 
 `ktools-csharp/ktrace/` is the C# implementation of `ktrace`.
@@ -16,7 +15,7 @@ This repo owns the C# API and implementation details for `ktrace`, including:
 - selector parsing and channel enablement semantics
 - `kcli` integration through `--trace-*`
 - C# demos and tests
-- repo-local C# build config for `kbuild`
+- workspace C# build config for `kbuild`
 
 ## Local Bootstrap
 
@@ -29,14 +28,14 @@ When familiarizing yourself with this repo, read:
 
 ## Build And Test Expectations
 
-- Use the local C# workspace `kbuild` copy for normal builds.
+- Use `kbuild` from the repo root for normal builds.
 - Preserve cross-language trace behavior where possible.
 - Keep CLI-facing trace controls aligned with the overview repo and the existing C++ implementation.
 
 Useful commands:
 
 ```bash
-python3 ../kbuild/kbuild.py --build-latest
-python3 ../kbuild/kbuild.py --build-demos
-python3 ../kbuild/kbuild.py --clean-latest
+kbuild --build-latest
+kbuild --build-demos
+kbuild --clean-latest
 ```

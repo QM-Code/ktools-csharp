@@ -1,0 +1,14 @@
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/bin/ExeCore.deps.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/bin/ExeCore.runtimeconfig.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/bin/ExeCore.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/bin/ExeCore.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.csproj.AssemblyReference.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.GeneratedMSBuildEditorConfig.editorconfig
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.csproj.CoreCompileInputs.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.sourcelink.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.csproj.Up2Date
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/refint/ExeCore.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ExeCore.genruntimeconfig.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/exe/core/build/latest/obj/ref/ExeCore.dll

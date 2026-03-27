@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Kcli</AssemblyName>
+    <RootNamespace>Kcli</RootNamespace>
+    <OutputType>Library</OutputType>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseAppHost>false</UseAppHost>
+    <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib</OutputPath>
+    <BaseIntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/obj/sdk</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Kcli.cs" Link="../../../../src/Kcli/Kcli.cs" />
+  </ItemGroup>
+</Project>

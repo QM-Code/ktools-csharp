@@ -1,0 +1,12 @@
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/sdk/lib/SdkGamma.deps.json
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/sdk/lib/SdkGamma.dll
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/sdk/lib/SdkGamma.pdb
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.csproj.AssemblyReference.cache
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.GeneratedMSBuildEditorConfig.editorconfig
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.csproj.CoreCompileInputs.cache
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.sourcelink.json
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.csproj.Up2Date
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.dll
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/refint/SdkGamma.dll
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/SdkGamma.pdb
+/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/sdk/gamma/build/latest/obj/ref/SdkGamma.dll

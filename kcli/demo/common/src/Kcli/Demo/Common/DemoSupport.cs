@@ -4,7 +4,7 @@ using Kcli;
 
 namespace Kcli.Demo.Common;
 
-public static class DemoSupport
+internal static class DemoSupport
 {
     public static void PrintProcessingLine(HandlerContext context, string value)
     {

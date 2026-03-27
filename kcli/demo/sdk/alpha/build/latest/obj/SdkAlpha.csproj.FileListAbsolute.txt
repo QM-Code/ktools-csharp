@@ -1,0 +1,12 @@
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/sdk/lib/SdkAlpha.deps.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/sdk/lib/SdkAlpha.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/sdk/lib/SdkAlpha.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.csproj.AssemblyReference.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.GeneratedMSBuildEditorConfig.editorconfig
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.csproj.CoreCompileInputs.cache
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.sourcelink.json
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.csproj.Up2Date
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/refint/SdkAlpha.dll
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/SdkAlpha.pdb
+/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/alpha/build/latest/obj/ref/SdkAlpha.dll

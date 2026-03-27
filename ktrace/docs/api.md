@@ -35,6 +35,7 @@ Rules:
 - channel depth is limited to three segments
 - nested channels require their parent channel to be registered first
 - color names are optional
+- child channels inherit the nearest registered parent color unless they override it
 
 ### Trace APIs
 
@@ -169,6 +170,8 @@ Formatting rules:
 - escaped braces `{{` and `}}`
 - `bool` formats as `true` or `false`
 - too few or too many arguments raise `ArgumentException`
+
+`TraceFormatter.ColorNames` exposes `Default` plus the same named 256-color catalog used by the C++ implementation.
 
 ## API Notes
 

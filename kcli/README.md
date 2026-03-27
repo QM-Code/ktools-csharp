@@ -32,6 +32,8 @@ parser.ParseOrExit(args);
 
 - [Overview](docs/index.md)
 - [API guide](docs/api.md)
+- [Parsing behavior](docs/behavior.md)
+- [Examples](docs/examples.md)
 
 ## Behavior Highlights
 
@@ -45,7 +47,35 @@ parser.ParseOrExit(args);
 ## Build
 
 ```bash
-python3 ../kbuild/kbuild.py --build-latest
+kbuild --build-latest
+```
+
+## Build And Run Demos
+
+```bash
+# Builds the SDK plus demos listed in .kbuild.json build.defaults.demos.
+kbuild --build-latest
+
+# Explicit demo-only run.
+kbuild --build-demos
+```
+
+Demo directories:
+
+- Bootstrap compile/link check: `demo/bootstrap/`
+- SDK demos: `demo/sdk/{alpha,beta,gamma}`
+- Executable demos: `demo/exe/{core,omega}`
+
+Useful demo commands:
+
+```bash
+./demo/exe/core/build/latest/test
+./demo/exe/core/build/latest/test --alpha
+./demo/exe/core/build/latest/test --alpha-message "hello"
+./demo/exe/core/build/latest/test --output stdout
+./demo/exe/omega/build/latest/test --beta-workers 8
+./demo/exe/omega/build/latest/test --newgamma-tag "prod"
+./demo/exe/omega/build/latest/test --build
 ```
 
 ## Layout

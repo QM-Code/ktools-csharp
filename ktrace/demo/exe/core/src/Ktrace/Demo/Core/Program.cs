@@ -10,20 +10,22 @@ public static class Program
     public static void Main(string[] args)
     {
         Logger logger = new Logger();
-        TraceLogger appTrace = new TraceLogger("core");
-        appTrace.AddChannel("app", "BrightCyan");
-        appTrace.AddChannel("startup", "BrightYellow");
+        TraceLogger trace = new TraceLogger("core");
+        trace.AddChannel("app", "BrightCyan");
+        trace.AddChannel("startup", "BrightYellow");
 
-        logger.AddTraceLogger(appTrace);
+        logger.AddTraceLogger(trace);
         logger.AddTraceLogger(AlphaTrace.GetTraceLogger());
 
+        logger.EnableChannel(trace, ".app");
+        trace.Trace("app", "core initialized local trace channels");
+
         Parser parser = new Parser();
-        parser.AddInlineParser(logger.MakeInlineParser(appTrace));
+        parser.AddInlineParser(logger.MakeInlineParser(trace));
         parser.ParseOrExit(args);
 
-        logger.EnableChannel(appTrace, ".app");
-        appTrace.Trace("app", "core trace active");
-        appTrace.Info("core logger ready");
-        TraceDemoSupport.PrintSummary("KTRACE csharp demo core import/integration check passed");
+        trace.Trace("app", "cli processing enabled, use --trace for options");
+        trace.Trace("startup", "testing imported tracing, use --trace '*.*' to view imported channels");
+        AlphaTrace.TestTraceLoggingChannels();
     }
 }

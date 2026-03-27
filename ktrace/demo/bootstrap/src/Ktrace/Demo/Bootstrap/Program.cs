@@ -9,8 +9,10 @@ public static class Program
     {
         Logger logger = new Logger();
         TraceLogger trace = new TraceLogger("bootstrap");
+        trace.AddChannel("bootstrap", "BrightGreen");
         logger.AddTraceLogger(trace);
-        trace.Info("ktrace csharp bootstrap import/log check passed");
-        TraceDemoSupport.PrintSummary("KTRACE csharp bootstrap import/log check passed");
+        logger.EnableChannel(trace, ".bootstrap");
+        trace.Trace("bootstrap", "ktrace bootstrap compile/link check");
+        TraceDemoSupport.PrintSummary("Bootstrap succeeded.");
     }
 }

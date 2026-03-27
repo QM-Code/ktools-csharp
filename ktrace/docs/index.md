@@ -10,6 +10,8 @@ It is built around two cooperating types:
 ## Start Here
 
 - [API guide](api.md)
+- [Behavior guide](behavior.md)
+- [Examples](examples.md)
 
 ## Typical Flow
 
@@ -35,6 +37,7 @@ parser.ParseOrExit(args);
 - Declares one trace namespace and its registered channels.
 - Emits channel-based trace output through `Trace()` and `TraceChanged()`.
 - Emits always-visible operational logging through `Info()`, `Warn()`, and `Error()`.
+- Applies explicit channel colors, with nested channels inheriting their nearest colored parent.
 
 `Logger`
 
@@ -46,6 +49,10 @@ parser.ParseOrExit(args);
 `OutputOptions`
 
 - Controls optional filename, line, function, and timestamp output.
+
+`TraceFormatter`
+
+- Provides public brace-based message formatting and exposes the named color catalog used by `ktrace`.
 
 ## Selector Model
 
@@ -68,6 +75,12 @@ Examples:
 - `*.*.*`
 - `*.{net,io}`
 - `{alpha,beta}.scheduler.tick`
+
+## Color Model
+
+- `TraceLogger.AddChannel(name, colorName)` accepts `Default` plus the xterm-style named colors shared with the C++ implementation.
+- Child channels inherit the nearest registered parent color unless they declare their own color.
+- `--trace-colors` prints the full available catalog at runtime.
 
 ## Working References
 

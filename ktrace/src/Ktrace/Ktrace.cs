@@ -375,11 +375,25 @@ public sealed class Logger
     {
         lock (_syncRoot)
         {
-            if (_colorsByNamespace.TryGetValue(traceNamespace, out Dictionary<string, string> colors) &&
-                colors.TryGetValue(channel, out string existing))
+            if (_colorsByNamespace.TryGetValue(traceNamespace, out Dictionary<string, string> colors))
             {
-                colorName = existing;
-                return true;
+                string key = channel ?? string.Empty;
+                while (key.Length > 0)
+                {
+                    if (colors.TryGetValue(key, out string existing))
+                    {
+                        colorName = existing;
+                        return true;
+                    }
+
+                    int separator = key.LastIndexOf('.');
+                    if (separator < 0)
+                    {
+                        break;
+                    }
+
+                    key = key.Substring(0, separator);
+                }
             }
         }
 
@@ -1159,14 +1173,265 @@ public static class TraceFormatter
     public static readonly string[] ColorNames =
     {
         "Default",
-        "BrightCyan",
-        "BrightYellow",
-        "Gold3",
-        "DeepSkyBlue1",
-        "Orange3",
+        "Black",
+        "Red",
+        "Green",
+        "Yellow",
+        "Blue",
+        "Magenta",
+        "Cyan",
+        "White",
+        "BrightBlack",
+        "BrightRed",
         "BrightGreen",
+        "BrightYellow",
+        "BrightBlue",
         "BrightMagenta",
+        "BrightCyan",
+        "BrightWhite",
+        "Grey0",
+        "NavyBlue",
+        "DarkBlue",
+        "Blue3",
+        "Blue3B",
+        "Blue1",
+        "DarkGreen",
+        "DeepSkyBlue4",
+        "DeepSkyBlue4B",
+        "DeepSkyBlue4C",
+        "DodgerBlue3",
+        "DodgerBlue2",
+        "Green4",
+        "SpringGreen4",
+        "Turquoise4",
+        "DeepSkyBlue3",
+        "DeepSkyBlue3B",
+        "DodgerBlue1",
+        "Green3",
+        "SpringGreen3",
+        "DarkCyan",
+        "LightSeaGreen",
+        "DeepSkyBlue2",
+        "DeepSkyBlue1",
+        "Green3B",
+        "SpringGreen3B",
+        "SpringGreen2",
+        "Cyan3",
+        "DarkTurquoise",
+        "Turquoise2",
+        "Green1",
+        "SpringGreen2B",
+        "SpringGreen1",
+        "MediumSpringGreen",
+        "Cyan2",
+        "Cyan1",
+        "DarkRed",
+        "DeepPink4",
+        "Purple4",
+        "Purple4B",
+        "Purple3",
+        "BlueViolet",
+        "Orange4",
+        "Grey37",
+        "MediumPurple4",
+        "SlateBlue3",
+        "SlateBlue3B",
+        "RoyalBlue1",
+        "Chartreuse4",
+        "DarkSeaGreen4",
+        "PaleTurquoise4",
+        "SteelBlue",
+        "SteelBlue3",
+        "CornflowerBlue",
+        "Chartreuse3",
+        "DarkSeaGreen4B",
+        "CadetBlue",
+        "CadetBlueB",
+        "SkyBlue3",
+        "SteelBlue1",
+        "Chartreuse3B",
+        "PaleGreen3",
+        "SeaGreen3",
+        "Aquamarine3",
+        "MediumTurquoise",
+        "SteelBlue1B",
+        "Chartreuse2",
+        "SeaGreen2",
+        "SeaGreen1",
+        "SeaGreen1B",
+        "Aquamarine1",
+        "DarkSlateGray2",
+        "DarkRedB",
+        "DeepPink4B",
+        "DarkMagenta",
+        "DarkMagentaB",
+        "DarkViolet",
+        "Purple",
+        "Orange4B",
+        "LightPink4",
+        "Plum4",
+        "MediumPurple3",
+        "MediumPurple3B",
+        "SlateBlue1",
+        "Yellow4",
+        "Wheat4",
+        "Grey53",
+        "LightSlateGrey",
+        "MediumPurple",
+        "LightSlateBlue",
+        "Yellow4B",
+        "DarkOliveGreen3",
+        "DarkSeaGreen",
+        "LightSkyBlue3",
+        "LightSkyBlue3B",
+        "SkyBlue2",
+        "Chartreuse2B",
+        "DarkOliveGreen3B",
+        "PaleGreen3B",
+        "DarkSeaGreen3",
+        "DarkSlateGray3",
+        "SkyBlue1",
+        "Chartreuse1",
+        "LightGreen",
+        "LightGreenB",
+        "PaleGreen1",
+        "Aquamarine1B",
+        "DarkSlateGray1",
+        "Red3",
+        "DeepPink4C",
+        "MediumVioletRed",
+        "Magenta3",
+        "DarkVioletB",
+        "PurpleB",
+        "DarkOrange3",
+        "IndianRed",
+        "HotPink3",
+        "MediumOrchid3",
+        "MediumOrchid",
+        "MediumPurple2",
+        "DarkGoldenrod",
+        "LightSalmon3",
+        "RosyBrown",
+        "Grey63",
+        "MediumPurple2B",
+        "MediumPurple1",
+        "Gold3",
+        "DarkKhaki",
+        "NavajoWhite3",
+        "Grey69",
+        "LightSteelBlue3",
+        "LightSteelBlue",
+        "Yellow3",
+        "DarkOliveGreen3C",
+        "DarkSeaGreen3B",
+        "DarkSeaGreen2",
+        "LightCyan3",
+        "LightSkyBlue1",
+        "GreenYellow",
+        "DarkOliveGreen2",
+        "PaleGreen1B",
+        "DarkSeaGreen2B",
+        "DarkSeaGreen1",
+        "PaleTurquoise1",
+        "Red3B",
+        "DeepPink3",
+        "DeepPink3B",
+        "Magenta3B",
+        "Magenta3C",
+        "Magenta2",
+        "DarkOrange3B",
+        "IndianRedB",
+        "HotPink3B",
+        "HotPink2",
+        "Orchid",
+        "MediumOrchid1",
+        "Orange3",
+        "LightSalmon3B",
+        "LightPink3",
+        "Pink3",
+        "Plum3",
+        "Violet",
+        "Gold3B",
+        "LightGoldenrod3",
+        "Tan",
+        "MistyRose3",
+        "Thistle3",
+        "Plum2",
+        "Yellow3B",
+        "Khaki3",
+        "LightGoldenrod2",
+        "LightYellow3",
+        "Grey84",
+        "LightSteelBlue1",
+        "Yellow2",
+        "DarkOliveGreen1",
+        "DarkOliveGreen1B",
+        "DarkSeaGreen1B",
+        "Honeydew2",
+        "LightCyan1",
+        "Red1",
+        "DeepPink2",
+        "DeepPink1",
+        "DeepPink1B",
+        "Magenta2B",
+        "Magenta1",
+        "OrangeRed1",
+        "IndianRed1",
+        "IndianRed1B",
+        "HotPink",
+        "HotPinkB",
+        "MediumOrchid1B",
+        "DarkOrange",
+        "Salmon1",
+        "LightCoral",
+        "PaleVioletRed1",
+        "Orchid2",
+        "Orchid1",
+        "Orange1",
+        "SandyBrown",
+        "LightSalmon1",
+        "LightPink1",
+        "Pink1",
+        "Plum1",
+        "Gold1",
+        "LightGoldenrod2B",
+        "LightGoldenrod2C",
+        "NavajoWhite1",
+        "MistyRose1",
+        "Thistle1",
+        "Yellow1",
+        "LightGoldenrod1",
+        "Khaki1",
+        "Wheat1",
+        "Cornsilk1",
+        "Grey100",
+        "Grey3",
+        "Grey7",
+        "Grey11",
+        "Grey15",
+        "Grey19",
+        "Grey23",
+        "Grey27",
+        "Grey30",
+        "Grey35",
+        "Grey39",
+        "Grey42",
+        "Grey46",
+        "Grey50",
+        "Grey54",
+        "Grey58",
+        "Grey62",
+        "Grey66",
+        "Grey70",
+        "Grey74",
+        "Grey78",
+        "Grey82",
+        "Grey85",
+        "Grey89",
+        "Grey93",
     };
+
+    private static readonly Dictionary<string, int> ColorIndexes = BuildColorIndexes();
 
     public static string FormatArgument(object value)
     {
@@ -1322,17 +1587,46 @@ public static class TraceFormatter
             return text;
         }
 
-        string code = colorName switch
+        if (!TryGetAnsiColorCode(colorName, out string code))
         {
-            "BrightCyan" => "\u001b[96m",
-            "BrightYellow" => "\u001b[93m",
-            "Gold3" => "\u001b[33m",
-            "DeepSkyBlue1" => "\u001b[94m",
-            "Orange3" => "\u001b[91m",
-            "BrightGreen" => "\u001b[92m",
-            "BrightMagenta" => "\u001b[95m",
-            _ => string.Empty,
-        };
-        return code.Length == 0 ? text : $"{code}{text}\u001b[0m";
+            return text;
+        }
+
+        return $"{code}{text}\u001b[0m";
+    }
+
+    private static Dictionary<string, int> BuildColorIndexes()
+    {
+        Dictionary<string, int> indexes = new Dictionary<string, int>(StringComparer.Ordinal);
+        for (int index = 0; index < ColorNames.Length; ++index)
+        {
+            indexes[ColorNames[index]] = index;
+        }
+        return indexes;
+    }
+
+    private static bool TryGetAnsiColorCode(string colorName, out string code)
+    {
+        if (!ColorIndexes.TryGetValue(colorName ?? string.Empty, out int index) || index == 0)
+        {
+            code = string.Empty;
+            return false;
+        }
+
+        index -= 1;
+        if (index <= 7)
+        {
+            code = $"\u001b[{30 + index}m";
+            return true;
+        }
+
+        if (index <= 15)
+        {
+            code = $"\u001b[{90 + (index - 8)}m";
+            return true;
+        }
+
+        code = $"\u001b[38;5;{index}m";
+        return true;
     }
 }

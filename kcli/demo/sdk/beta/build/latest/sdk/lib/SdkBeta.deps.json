@@ -1,0 +1,53 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "SdkBeta/1.0.0": {
+        "dependencies": {
+          "Kcli": "0.0.0.0",
+          "SdkAlpha": "0.0.0.0"
+        },
+        "runtime": {
+          "SdkBeta.dll": {}
+        }
+      },
+      "Kcli/0.0.0.0": {
+        "runtime": {
+          "Kcli.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "SdkAlpha/0.0.0.0": {
+        "runtime": {
+          "SdkAlpha.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SdkBeta/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Kcli/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SdkAlpha/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

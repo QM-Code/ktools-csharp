@@ -3,7 +3,7 @@ using Ktrace;
 
 namespace Ktrace.Demo.Common;
 
-public static class TraceDemoSupport
+internal static class TraceDemoSupport
 {
     public static void PrintSummary(string title)
     {

@@ -1,0 +1,27 @@
+    <Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <AssemblyName>Bootstrap</AssemblyName>
+        <RootNamespace>Bootstrap</RootNamespace>
+        <OutputType>Exe</OutputType>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <UseAppHost>false</UseAppHost>
+        <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/bootstrap/build/latest/bin</OutputPath>
+        <BaseIntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/bootstrap/build/latest/obj</BaseIntermediateOutputPath>
+        <IntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/bootstrap/build/latest/obj</IntermediateOutputPath>
+      </PropertyGroup>
+      <ItemGroup>
+        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/common/src/Kcli/Demo/Common/DemoSupport.cs" Link="../../../../common/src/Kcli/Demo/Common/DemoSupport.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/bootstrap/src/Kcli/Demo/Bootstrap/Program.cs" Link="../../../src/Kcli/Demo/Bootstrap/Program.cs" />
+      </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Kcli">
+      <HintPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib/Kcli.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

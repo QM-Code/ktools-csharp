@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if ! command -v dotnet >/dev/null 2>&1; then
+  echo "dotnet is required to run this build artifact." >&2
+  exit 1
+fi
+exec dotnet "/home/karmak/dev/ktools/ktools-csharp/kcli/demo/bootstrap/build/latest/bin/Bootstrap.dll" "$@"

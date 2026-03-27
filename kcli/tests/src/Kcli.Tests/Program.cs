@@ -35,6 +35,14 @@ internal static class ApiTests
         TestAliasPresetTokensRejectedForFlags();
         TestRequiredValueAcceptsOptionLikeFirstToken();
         TestBareInlineRootPrintsHelp();
+        TestRootValueHandlerHelpRowPrints();
+        TestInlineRootValueHandlerJoinsTokens();
+        TestOptionalValueHandlerAcceptsExplicitEmptyValue();
+        TestParserCanBeReusedAcrossParses();
+        TestDuplicateInlineRootRejected();
+        TestOptionHandlerExceptionThrowsCliError();
+        TestPositionalHandlerExceptionThrowsCliError();
+        TestPositionalHandlerPreservesExplicitEmptyTokens();
         TestDoubleDashRemainsUnknown();
     }
 
@@ -144,6 +152,110 @@ internal static class ApiTests
         string stdout = CaptureStdout(() => parser.ParseOrThrow(new[] { "--alpha" }));
         Assert.Contains(stdout, "Available --alpha-* options:", "bare inline root should print help");
         Assert.Contains(stdout, "--alpha-enable [value]", "help should include optional value syntax");
+    }
+
+    private static void TestRootValueHandlerHelpRowPrints()
+    {
+        Parser parser = new Parser();
+        InlineParser build = new InlineParser("--build");
+        build.SetRootValueHandler((_, _) => { }, "<selector>", "Select build targets.");
+        parser.AddInlineParser(build);
+
+        string stdout = CaptureStdout(() => parser.ParseOrThrow(new[] { "--build" }));
+        Assert.Contains(stdout, "--build <selector>", "bare root help should include the root value placeholder");
+        Assert.Contains(stdout, "Select build targets.", "bare root help should include the root value description");
+    }
+
+    private static void TestInlineRootValueHandlerJoinsTokens()
+    {
+        string joined = string.Empty;
+        List<string> tokens = new List<string>();
+
+        Parser parser = new Parser();
+        InlineParser config = new InlineParser("--config");
+        config.SetRootValueHandler((context, value) =>
+        {
+            joined = value;
+            tokens.AddRange(context.ValueTokens);
+        }, "<assignment>", "Store a config assignment.");
+        parser.AddInlineParser(config);
+        parser.ParseOrThrow(new[] { "--config", "user=alice", "profile=prod" });
+
+        Assert.Equal(joined, "user=alice profile=prod", "inline root values should be joined with spaces");
+        Assert.Equal(string.Join("|", tokens), "user=alice|profile=prod", "inline root handlers should receive all value tokens");
+    }
+
+    private static void TestOptionalValueHandlerAcceptsExplicitEmptyValue()
+    {
+        string captured = "unset";
+        List<string> tokens = new List<string>();
+
+        Parser parser = new Parser();
+        parser.SetOptionalValueHandler("--color", (context, value) =>
+        {
+            captured = value;
+            tokens.AddRange(context.ValueTokens);
+        }, "Set or auto-detect color output.");
+        parser.ParseOrThrow(new[] { "--color", string.Empty });
+
+        Assert.Equal(captured, string.Empty, "optional value handlers should accept explicit empty values");
+        Assert.Equal(tokens.Count, 1, "explicit empty values should still count as a value token");
+        Assert.Equal(tokens[0], string.Empty, "explicit empty tokens should be preserved");
+    }
+
+    private static void TestParserCanBeReusedAcrossParses()
+    {
+        List<string> outputs = new List<string>();
+        Parser parser = new Parser();
+        parser.SetHandler("--output", (_, value) => outputs.Add(value), "Set output target.");
+
+        parser.ParseOrThrow(new[] { "--output", "stdout" });
+        parser.ParseOrThrow(new[] { "--output", "stderr" });
+
+        Assert.Equal(string.Join("|", outputs), "stdout|stderr", "parser instances should be reusable across parses");
+    }
+
+    private static void TestDuplicateInlineRootRejected()
+    {
+        Parser parser = new Parser();
+        parser.AddInlineParser(new InlineParser("--build"));
+
+        ArgumentException error = Assert.Throws<ArgumentException>(() =>
+        {
+            parser.AddInlineParser(new InlineParser("build"));
+        }, "duplicate inline parser roots should be rejected");
+
+        Assert.Contains(error.Message, "already registered", "duplicate root errors should explain the conflict");
+    }
+
+    private static void TestOptionHandlerExceptionThrowsCliError()
+    {
+        Parser parser = new Parser();
+        parser.SetHandler("--boom", _ => throw new InvalidOperationException("handler failed"), "Trigger failure.");
+
+        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "--boom" }), "handler failures should surface as CliError");
+        Assert.Equal(error.Option, "--boom", "CliError should surface the failing option");
+        Assert.Contains(error.Message, "option '--boom': handler failed", "CliError should preserve the handler failure message");
+    }
+
+    private static void TestPositionalHandlerExceptionThrowsCliError()
+    {
+        Parser parser = new Parser();
+        parser.SetPositionalHandler(_ => throw new InvalidOperationException("positionals failed"));
+
+        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "input.txt" }), "positional failures should surface as CliError");
+        Assert.Equal(error.Option, string.Empty, "positional handler failures should not report an option token");
+        Assert.Contains(error.Message, "positionals failed", "positional handler failures should preserve the original message");
+    }
+
+    private static void TestPositionalHandlerPreservesExplicitEmptyTokens()
+    {
+        List<string> tokens = new List<string>();
+        Parser parser = new Parser();
+        parser.SetPositionalHandler(context => tokens.AddRange(context.ValueTokens));
+        parser.ParseOrThrow(new[] { "first", string.Empty, "last" });
+
+        Assert.Equal(string.Join("|", tokens), "first||last", "positional handlers should preserve explicit empty tokens");
     }
 
     private static void TestDoubleDashRemainsUnknown()
