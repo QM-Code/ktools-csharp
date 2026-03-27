@@ -1,0 +1,17 @@
+{
+  "project": {
+    "title": "Karma Tools C# Workspace",
+    "id": "ktools_csharp"
+  },
+  "git": {
+    "url": "https://github.com/QM-Code/ktools-csharp",
+    "auth": "git@github.com:QM-Code/ktools-csharp.git"
+  },
+  "batch": {
+    "repos": [
+      "kbuild",
+      "kcli",
+      "ktrace"
+    ]
+  }
+}

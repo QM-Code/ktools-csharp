@@ -1,0 +1,44 @@
+{
+  "project": {
+    "title": "Karma Trace Logging SDK For C#",
+    "id": "ktrace"
+  },
+  "git": {
+    "url": "https://github.com/QM-Code/ktrace-csharp",
+    "auth": "git@github.com:QM-Code/ktrace-csharp.git"
+  },
+  "csharp": {
+    "source_roots": [
+      "src"
+    ],
+    "test_roots": [
+      "tests/src"
+    ],
+    "demo_root": "demo",
+    "assembly_name": "Ktrace",
+    "target_framework": "net8.0",
+    "dependencies": {
+      "Kcli": "../kcli/build/{version}/sdk/lib/Kcli.dll"
+    }
+  },
+  "build": {
+    "demos": [
+      "bootstrap",
+      "sdk/alpha",
+      "sdk/beta",
+      "sdk/gamma",
+      "exe/core",
+      "exe/omega"
+    ],
+    "defaults": {
+      "demos": [
+        "bootstrap",
+        "sdk/alpha",
+        "sdk/beta",
+        "sdk/gamma",
+        "exe/core",
+        "exe/omega"
+      ]
+    }
+  }
+}

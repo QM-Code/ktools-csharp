@@ -1,0 +1,41 @@
+{
+  "project": {
+    "title": "Karma CLI Parsing SDK For C#",
+    "id": "kcli"
+  },
+  "git": {
+    "url": "https://github.com/QM-Code/kcli-csharp",
+    "auth": "git@github.com:QM-Code/kcli-csharp.git"
+  },
+  "csharp": {
+    "source_roots": [
+      "src"
+    ],
+    "test_roots": [
+      "tests/src"
+    ],
+    "demo_root": "demo",
+    "assembly_name": "Kcli",
+    "target_framework": "net8.0"
+  },
+  "build": {
+    "demos": [
+      "bootstrap",
+      "sdk/alpha",
+      "sdk/beta",
+      "sdk/gamma",
+      "exe/core",
+      "exe/omega"
+    ],
+    "defaults": {
+      "demos": [
+        "bootstrap",
+        "sdk/alpha",
+        "sdk/beta",
+        "sdk/gamma",
+        "exe/core",
+        "exe/omega"
+      ]
+    }
+  }
+}
