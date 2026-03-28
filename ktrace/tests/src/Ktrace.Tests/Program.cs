@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Threading;
+using Kcli;
+using Ktools.CSharp.Tests;
 using Ktrace;
 
 namespace Ktrace.Tests;
@@ -30,40 +31,24 @@ internal static class FormatTests
 {
     public static void Run()
     {
-        Assert.Equal(TraceFormatter.FormatMessage("value {} {}", 7, "done"), "value 7 done", "format placeholders should be substituted");
-        Assert.Equal(TraceFormatter.FormatMessage("escaped {{}}"), "escaped {}", "escaped braces should be preserved");
-        Assert.Equal(TraceFormatter.FormatMessage("bool {}", true), "bool true", "bools should format lower-case");
+        TestAssert.Equal(TraceFormatter.FormatMessage("value {} {}", 7, "done"), "value 7 done", "format placeholders should be substituted");
+        TestAssert.Equal(TraceFormatter.FormatMessage("escaped {{}}"), "escaped {}", "escaped braces should be preserved");
+        TestAssert.Equal(TraceFormatter.FormatMessage("bool {}", true), "bool true", "bools should format lower-case");
 
-        Assert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("value {} {}", 7), "missing arguments should fail");
-        Assert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("{"), "unterminated braces should fail");
-        Assert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("{:x}", 7), "unsupported format specifiers should fail");
-        Assert.True(Array.IndexOf(TraceFormatter.ColorNames, "HotPink") >= 0, "C# trace colors should include the C++ named color surface");
-        Assert.True(Array.IndexOf(TraceFormatter.ColorNames, "Grey93") >= 0, "C# trace colors should include the extended grayscale colors");
+        TestAssert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("value {} {}", 7), "missing arguments should fail");
+        TestAssert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("{"), "unterminated braces should fail");
+        TestAssert.Throws<ArgumentException>(() => TraceFormatter.FormatMessage("{:x}", 7), "unsupported format specifiers should fail");
+        TestAssert.True(Array.IndexOf(TraceFormatter.ColorNames, "HotPink") >= 0, "C# trace colors should include the C++ named color surface");
+        TestAssert.True(Array.IndexOf(TraceFormatter.ColorNames, "Grey93") >= 0, "C# trace colors should include the extended grayscale colors");
 
-        string output = CaptureStdout(() =>
+        string output = TestConsole.CaptureStdout(() =>
         {
             Logger logger = new Logger();
             TraceLogger trace = new TraceLogger("tests");
             logger.AddTraceLogger(trace);
             trace.Warn("escaped {{}} {}", 7);
         });
-        Assert.Contains(output, "escaped {} 7", "warn output should contain formatted text");
-    }
-
-    private static string CaptureStdout(Action action)
-    {
-        StringWriter writer = new StringWriter();
-        TextWriter previous = Console.Out;
-        try
-        {
-            Console.SetOut(writer);
-            action();
-            return writer.ToString();
-        }
-        finally
-        {
-            Console.SetOut(previous);
-        }
+        TestAssert.Contains(output, "escaped {} 7", "warn output should contain formatted text");
     }
 }
 
@@ -77,6 +62,7 @@ internal static class ChannelTests
         VerifyParentColorInheritance();
         VerifyLogPrefixes();
         VerifyTraceOutput();
+        VerifyInlineParserSurface();
         VerifyChangedThreadSafety();
     }
 
@@ -86,19 +72,19 @@ internal static class ChannelTests
         AddTestChannels(logger);
 
         logger.EnableChannels("tests.*");
-        Assert.True(logger.ShouldTraceChannel("tests.net"), "tests.net should be enabled by tests.*");
-        Assert.True(logger.ShouldTraceChannel("tests.cache"), "tests.cache should be enabled by tests.*");
+        TestAssert.True(logger.ShouldTraceChannel("tests.net"), "tests.net should be enabled by tests.*");
+        TestAssert.True(logger.ShouldTraceChannel("tests.cache"), "tests.cache should be enabled by tests.*");
 
         logger.DisableChannels("tests.*");
-        Assert.True(!logger.ShouldTraceChannel("tests.net"), "tests.net should be disabled after tests.* disable");
-        Assert.True(!logger.ShouldTraceChannel("tests.cache"), "tests.cache should be disabled after tests.* disable");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.net"), "tests.net should be disabled after tests.* disable");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.cache"), "tests.cache should be disabled after tests.* disable");
 
         logger.EnableChannel("tests.net");
-        Assert.True(logger.ShouldTraceChannel("tests.net"), "explicit enable should turn tests.net back on");
-        Assert.True(!logger.ShouldTraceChannel("tests.cache"), "tests.cache should stay off after explicit enable");
+        TestAssert.True(logger.ShouldTraceChannel("tests.net"), "explicit enable should turn tests.net back on");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.cache"), "tests.cache should stay off after explicit enable");
 
         logger.DisableChannel("tests.net");
-        Assert.True(!logger.ShouldTraceChannel("tests.net"), "explicit disable should turn tests.net back off");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.net"), "explicit disable should turn tests.net back off");
     }
 
     private static void VerifyRegisteredChannelSemantics()
@@ -107,15 +93,15 @@ internal static class ChannelTests
         AddTestChannels(logger);
 
         logger.EnableChannels("*.*.*");
-        Assert.True(logger.ShouldTraceChannel("tests.store.requests"), "tests.store.requests should trace when explicitly registered and enabled");
-        Assert.True(logger.ShouldTraceChannel("tests.net"), "tests.net should trace when *.*.* enables channels up to depth 2");
-        Assert.True(!logger.ShouldTraceChannel("tests.bad name"), "invalid runtime channel names should not trace");
+        TestAssert.True(logger.ShouldTraceChannel("tests.store.requests"), "tests.store.requests should trace when explicitly registered and enabled");
+        TestAssert.True(logger.ShouldTraceChannel("tests.net"), "tests.net should trace when *.*.* enables channels up to depth 2");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.bad name"), "invalid runtime channel names should not trace");
 
         logger.EnableChannel("tests.missing.child");
-        Assert.True(!logger.ShouldTraceChannel("tests.missing.child"), "enableChannel should ignore unregistered exact channels");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.missing.child"), "enableChannel should ignore unregistered exact channels");
 
         logger.EnableChannels("tests.missing.child");
-        Assert.True(!logger.ShouldTraceChannel("tests.missing.child"), "enableChannels should ignore unresolved exact selectors");
+        TestAssert.True(!logger.ShouldTraceChannel("tests.missing.child"), "enableChannels should ignore unresolved exact selectors");
     }
 
     private static void VerifyTraceLoggerMergeSemantics()
@@ -136,7 +122,7 @@ internal static class ChannelTests
 
         TraceLogger conflictingColor = new TraceLogger("tests");
         conflictingColor.AddChannel("net", "Orange3");
-        Assert.Throws<ArgumentException>(() => logger.AddTraceLogger(conflictingColor), "conflicting explicit channel colors should be rejected");
+        TestAssert.Throws<ArgumentException>(() => logger.AddTraceLogger(conflictingColor), "conflicting explicit channel colors should be rejected");
     }
 
     private static void VerifyParentColorInheritance()
@@ -148,12 +134,12 @@ internal static class ChannelTests
         logger.AddTraceLogger(trace);
 
         string color = ResolveChannelColor(logger, "tests", "net.child");
-        Assert.Equal(color, "DeepSkyBlue1", "child channels should inherit their nearest registered parent color");
+        TestAssert.Equal(color, "DeepSkyBlue1", "child channels should inherit their nearest registered parent color");
     }
 
     private static void VerifyLogPrefixes()
     {
-        string output = CaptureStdout(() =>
+        string output = TestConsole.CaptureStdout(() =>
         {
             Logger logger = new Logger();
             TraceLogger trace = new TraceLogger("tests");
@@ -168,14 +154,14 @@ internal static class ChannelTests
             trace.Error("error message");
         });
 
-        Assert.Contains(output, "[tests] [info]", "info prefix should include namespace and severity");
-        Assert.Contains(output, "[tests] [warning]", "warning prefix should include namespace and severity");
-        Assert.Contains(output, "[tests] [error]", "error prefix should include namespace and severity");
+        TestAssert.Contains(output, "[tests] [info]", "info prefix should include namespace and severity");
+        TestAssert.Contains(output, "[tests] [warning]", "warning prefix should include namespace and severity");
+        TestAssert.Contains(output, "[tests] [error]", "error prefix should include namespace and severity");
     }
 
     private static void VerifyTraceOutput()
     {
-        string output = CaptureStdout(() =>
+        string output = TestConsole.CaptureStdout(() =>
         {
             Logger logger = new Logger();
             TraceLogger trace = new TraceLogger("tests");
@@ -185,8 +171,41 @@ internal static class ChannelTests
             trace.Trace("trace", "member {} {{ok}}", 42);
         });
 
-        Assert.Contains(output, "[tests] [trace]", "trace output should include namespace and channel");
-        Assert.Contains(output, "member 42 {ok}", "trace output should contain formatted trace text");
+        TestAssert.Contains(output, "[tests] [trace]", "trace output should include namespace and channel");
+        TestAssert.Contains(output, "member 42 {ok}", "trace output should contain formatted trace text");
+    }
+
+    private static void VerifyInlineParserSurface()
+    {
+        Logger logger = new Logger();
+        TraceLogger trace = new TraceLogger("tests");
+        trace.AddChannel("app", "HotPink");
+        logger.AddTraceLogger(trace);
+
+        Parser parser = new Parser();
+        parser.AddInlineParser(logger.MakeInlineParser(trace));
+
+        string help = TestConsole.CaptureStdout(() => parser.ParseOrThrow(new[] { "--trace" }));
+        TestAssert.Contains(help, "Available --trace-* options:", "bare trace root should print inline help");
+        TestAssert.Contains(help, "--trace-examples", "trace help should list selector examples");
+        TestAssert.Contains(help, "--trace-functions", "trace help should list function output control");
+
+        string examples = TestConsole.CaptureStdout(() => parser.ParseOrThrow(new[] { "--trace-examples" }));
+        TestAssert.Contains(examples, "Trace selector examples:", "trace examples command should print selector examples");
+        TestAssert.Contains(examples, "--trace '.abc'", "trace examples should describe local selectors");
+
+        parser.ParseOrThrow(new[] { "--trace", ".app" });
+        TestAssert.True(logger.ShouldTraceChannel(trace, ".app"), "trace root value handler should enable local selectors");
+
+        parser.ParseOrThrow(new[] { "--trace-functions" });
+        OutputOptions functionOptions = logger.GetOutputOptions();
+        TestAssert.True(functionOptions.Filenames, "trace-functions should enable filenames");
+        TestAssert.True(functionOptions.LineNumbers, "trace-functions should enable line numbers");
+        TestAssert.True(functionOptions.FunctionNames, "trace-functions should enable function names");
+
+        parser.ParseOrThrow(new[] { "--trace-timestamps" });
+        OutputOptions timestampOptions = logger.GetOutputOptions();
+        TestAssert.True(timestampOptions.Timestamps, "trace-timestamps should enable timestamps");
     }
 
     private static void VerifyChangedThreadSafety()
@@ -239,7 +258,7 @@ internal static class ChannelTests
             worker.Join();
         }
 
-        Assert.Equal(errors.Count, 0, "traceChanged should stay thread-safe under concurrent use");
+        TestAssert.Equal(errors.Count, 0, "traceChanged should stay thread-safe under concurrent use");
     }
 
     private static void AddTestChannels(Logger logger)
@@ -252,22 +271,6 @@ internal static class ChannelTests
         logger.AddTraceLogger(tracer);
     }
 
-    private static string CaptureStdout(Action action)
-    {
-        StringWriter writer = new StringWriter();
-        TextWriter previous = Console.Out;
-        try
-        {
-            Console.SetOut(writer);
-            action();
-            return writer.ToString();
-        }
-        finally
-        {
-            Console.SetOut(previous);
-        }
-    }
-
     private static string ResolveChannelColor(Logger logger, string traceNamespace, string channel)
     {
         MethodInfo tryGetColor = typeof(Logger).GetMethod("TryGetColor", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -278,54 +281,7 @@ internal static class ChannelTests
 
         object[] args = { traceNamespace, channel, null };
         bool found = (bool)(tryGetColor.Invoke(logger, args) ?? false);
-        Assert.True(found, "expected channel color lookup to succeed");
+        TestAssert.True(found, "expected channel color lookup to succeed");
         return args[2] as string ?? string.Empty;
-    }
-}
-
-internal static class Assert
-{
-    public static void True(bool condition, string message)
-    {
-        if (!condition)
-        {
-            throw new InvalidOperationException(message);
-        }
-    }
-
-    public static void Equal<T>(T actual, T expected, string message)
-    {
-        if (!EqualityComparer<T>.Default.Equals(actual, expected))
-        {
-            throw new InvalidOperationException($"{message}\nexpected: {expected}\nactual:   {actual}");
-        }
-    }
-
-    public static void Contains(string actual, string needle, string message)
-    {
-        if ((actual ?? string.Empty).Contains(needle, StringComparison.Ordinal))
-        {
-            return;
-        }
-        throw new InvalidOperationException($"{message}\nmissing: {needle}\nactual:  {actual}");
-    }
-
-    public static void Throws<T>(Action action, string message)
-        where T : Exception
-    {
-        try
-        {
-            action();
-        }
-        catch (T)
-        {
-            return;
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"{message}\nexpected: {typeof(T).Name}\nactual:   {ex.GetType().Name}");
-        }
-
-        throw new InvalidOperationException($"{message}\nexpected: {typeof(T).Name}\nactual:   none");
     }
 }

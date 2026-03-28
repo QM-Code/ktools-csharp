@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Kcli;
+using Ktools.CSharp.Tests;
 
 namespace Kcli.Tests;
 
@@ -40,6 +40,7 @@ internal static class ApiTests
         TestOptionalValueHandlerAcceptsExplicitEmptyValue();
         TestParserCanBeReusedAcrossParses();
         TestDuplicateInlineRootRejected();
+        TestInlineParserSetRootRewritesEffectiveOption();
         TestOptionHandlerExceptionThrowsCliError();
         TestPositionalHandlerExceptionThrowsCliError();
         TestPositionalHandlerPreservesExplicitEmptyTokens();
@@ -51,7 +52,7 @@ internal static class ApiTests
         string[] argv = { "prog" };
         Parser parser = new Parser();
         parser.ParseOrThrow(argv.Length, argv);
-        Assert.Equal(string.Join("|", argv), "prog", "parseOrThrow should leave argv unchanged");
+        TestAssert.Equal(string.Join("|", argv), "prog", "parseOrThrow should leave argv unchanged");
     }
 
     private static void TestUnknownOptionDoesNotRunHandlers()
@@ -66,12 +67,12 @@ internal static class ApiTests
         parser.SetHandler("--output", (_, value) => output = value, "Set output target.");
         parser.SetPositionalHandler(context => positionals.AddRange(context.ValueTokens));
 
-        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(argv.Length, argv), "unknown option should fail before handlers run");
-        Assert.True(!verbose, "verbose handler should not have run");
-        Assert.Equal(output, string.Empty, "value handler should not have run");
-        Assert.Equal(positionals.Count, 0, "positional handler should not have run");
-        Assert.Equal(error.Option, "--bogus", "CliError option should match unknown token");
-        Assert.Contains(error.Message, "unknown option --bogus", "CliError should describe unknown option");
+        CliError error = TestAssert.Throws<CliError>(() => parser.ParseOrThrow(argv.Length, argv), "unknown option should fail before handlers run");
+        TestAssert.True(!verbose, "verbose handler should not have run");
+        TestAssert.Equal(output, string.Empty, "value handler should not have run");
+        TestAssert.Equal(positionals.Count, 0, "positional handler should not have run");
+        TestAssert.Equal(error.Option, "--bogus", "CliError option should match unknown token");
+        TestAssert.Contains(error.Message, "unknown option --bogus", "CliError should describe unknown option");
     }
 
     private static void TestAliasRewritesOption()
@@ -81,7 +82,7 @@ internal static class ApiTests
         parser.AddAlias("-v", "--verbose");
         parser.SetHandler("--verbose", context => seen = context.Option, "Enable verbose logging.");
         parser.ParseOrThrow(new[] { "-v" });
-        Assert.Equal(seen, "--verbose", "alias should rewrite the effective option");
+        TestAssert.Equal(seen, "--verbose", "alias should rewrite the effective option");
     }
 
     private static void TestAliasPresetTokensSatisfyRequiredValue()
@@ -96,8 +97,8 @@ internal static class ApiTests
             tokens.AddRange(context.ValueTokens);
         }, "Set active profile.");
         parser.ParseOrThrow(new[] { "-p" });
-        Assert.Equal(seen, "release", "preset token should satisfy required value");
-        Assert.Equal(string.Join("|", tokens), "release", "context tokens should include preset value");
+        TestAssert.Equal(seen, "release", "preset token should satisfy required value");
+        TestAssert.Equal(string.Join("|", tokens), "release", "context tokens should include preset value");
     }
 
     private static void TestAliasPresetTokensApplyToInlineRootValue()
@@ -116,8 +117,8 @@ internal static class ApiTests
         parser.AddAlias("-c", "--config", "user-file=/tmp/user.json");
         parser.ParseOrThrow(new[] { "-c" });
 
-        Assert.Equal(option, "--config", "inline root option should be preserved");
-        Assert.Equal(value, "user-file=/tmp/user.json", "preset value should reach root handler");
+        TestAssert.Equal(option, "--config", "inline root option should be preserved");
+        TestAssert.Equal(value, "user-file=/tmp/user.json", "preset value should reach root handler");
     }
 
     private static void TestAliasPresetTokensRejectedForFlags()
@@ -126,9 +127,9 @@ internal static class ApiTests
         parser.AddAlias("-v", "--verbose", "unexpected");
         parser.SetHandler("--verbose", _ => { }, "Enable verbose logging.");
 
-        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "-v" }), "flag aliases must reject preset tokens");
-        Assert.Equal(error.Option, "-v", "error should surface the alias token");
-        Assert.Contains(error.Message, "does not accept values", "error should explain the flag rejection");
+        CliError error = TestAssert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "-v" }), "flag aliases must reject preset tokens");
+        TestAssert.Equal(error.Option, "-v", "error should surface the alias token");
+        TestAssert.Contains(error.Message, "does not accept values", "error should explain the flag rejection");
     }
 
     private static void TestRequiredValueAcceptsOptionLikeFirstToken()
@@ -139,7 +140,7 @@ internal static class ApiTests
         parser.SetHandler("--output", (_, value) => captured = value, "Set output target.");
         parser.SetHandler("--verbose", _ => throw new InvalidOperationException("verbose should not be treated as a separate option"), "Enable verbose logging.");
         parser.ParseOrThrow(new[] { "--output", "-v" });
-        Assert.Equal(captured, "-v", "required values should accept option-like first tokens");
+        TestAssert.Equal(captured, "-v", "required values should accept option-like first tokens");
     }
 
     private static void TestBareInlineRootPrintsHelp()
@@ -149,9 +150,9 @@ internal static class ApiTests
         alpha.SetOptionalValueHandler("-enable", (_, _) => { }, "Enable alpha processing.");
         parser.AddInlineParser(alpha);
 
-        string stdout = CaptureStdout(() => parser.ParseOrThrow(new[] { "--alpha" }));
-        Assert.Contains(stdout, "Available --alpha-* options:", "bare inline root should print help");
-        Assert.Contains(stdout, "--alpha-enable [value]", "help should include optional value syntax");
+        string stdout = TestConsole.CaptureStdout(() => parser.ParseOrThrow(new[] { "--alpha" }));
+        TestAssert.Contains(stdout, "Available --alpha-* options:", "bare inline root should print help");
+        TestAssert.Contains(stdout, "--alpha-enable [value]", "help should include optional value syntax");
     }
 
     private static void TestRootValueHandlerHelpRowPrints()
@@ -161,9 +162,9 @@ internal static class ApiTests
         build.SetRootValueHandler((_, _) => { }, "<selector>", "Select build targets.");
         parser.AddInlineParser(build);
 
-        string stdout = CaptureStdout(() => parser.ParseOrThrow(new[] { "--build" }));
-        Assert.Contains(stdout, "--build <selector>", "bare root help should include the root value placeholder");
-        Assert.Contains(stdout, "Select build targets.", "bare root help should include the root value description");
+        string stdout = TestConsole.CaptureStdout(() => parser.ParseOrThrow(new[] { "--build" }));
+        TestAssert.Contains(stdout, "--build <selector>", "bare root help should include the root value placeholder");
+        TestAssert.Contains(stdout, "Select build targets.", "bare root help should include the root value description");
     }
 
     private static void TestInlineRootValueHandlerJoinsTokens()
@@ -181,8 +182,8 @@ internal static class ApiTests
         parser.AddInlineParser(config);
         parser.ParseOrThrow(new[] { "--config", "user=alice", "profile=prod" });
 
-        Assert.Equal(joined, "user=alice profile=prod", "inline root values should be joined with spaces");
-        Assert.Equal(string.Join("|", tokens), "user=alice|profile=prod", "inline root handlers should receive all value tokens");
+        TestAssert.Equal(joined, "user=alice profile=prod", "inline root values should be joined with spaces");
+        TestAssert.Equal(string.Join("|", tokens), "user=alice|profile=prod", "inline root handlers should receive all value tokens");
     }
 
     private static void TestOptionalValueHandlerAcceptsExplicitEmptyValue()
@@ -198,9 +199,9 @@ internal static class ApiTests
         }, "Set or auto-detect color output.");
         parser.ParseOrThrow(new[] { "--color", string.Empty });
 
-        Assert.Equal(captured, string.Empty, "optional value handlers should accept explicit empty values");
-        Assert.Equal(tokens.Count, 1, "explicit empty values should still count as a value token");
-        Assert.Equal(tokens[0], string.Empty, "explicit empty tokens should be preserved");
+        TestAssert.Equal(captured, string.Empty, "optional value handlers should accept explicit empty values");
+        TestAssert.Equal(tokens.Count, 1, "explicit empty values should still count as a value token");
+        TestAssert.Equal(tokens[0], string.Empty, "explicit empty tokens should be preserved");
     }
 
     private static void TestParserCanBeReusedAcrossParses()
@@ -212,7 +213,7 @@ internal static class ApiTests
         parser.ParseOrThrow(new[] { "--output", "stdout" });
         parser.ParseOrThrow(new[] { "--output", "stderr" });
 
-        Assert.Equal(string.Join("|", outputs), "stdout|stderr", "parser instances should be reusable across parses");
+        TestAssert.Equal(string.Join("|", outputs), "stdout|stderr", "parser instances should be reusable across parses");
     }
 
     private static void TestDuplicateInlineRootRejected()
@@ -220,12 +221,33 @@ internal static class ApiTests
         Parser parser = new Parser();
         parser.AddInlineParser(new InlineParser("--build"));
 
-        ArgumentException error = Assert.Throws<ArgumentException>(() =>
+        ArgumentException error = TestAssert.Throws<ArgumentException>(() =>
         {
             parser.AddInlineParser(new InlineParser("build"));
         }, "duplicate inline parser roots should be rejected");
 
-        Assert.Contains(error.Message, "already registered", "duplicate root errors should explain the conflict");
+        TestAssert.Contains(error.Message, "already registered", "duplicate root errors should explain the conflict");
+    }
+
+    private static void TestInlineParserSetRootRewritesEffectiveOption()
+    {
+        string seenRoot = string.Empty;
+        string seenOption = string.Empty;
+
+        Parser parser = new Parser();
+        InlineParser inlineParser = new InlineParser("--alpha");
+        inlineParser.SetHandler("-enable", context =>
+        {
+            seenRoot = context.Root;
+            seenOption = context.Option;
+        }, "Enable the renamed root.");
+        inlineParser.SetRoot("--omega");
+        parser.AddInlineParser(inlineParser);
+
+        parser.ParseOrThrow(new[] { "--omega-enable" });
+
+        TestAssert.Equal(seenRoot, "omega", "SetRoot should rewrite the effective handler root");
+        TestAssert.Equal(seenOption, "--omega-enable", "SetRoot should rewrite the effective handler option");
     }
 
     private static void TestOptionHandlerExceptionThrowsCliError()
@@ -233,9 +255,9 @@ internal static class ApiTests
         Parser parser = new Parser();
         parser.SetHandler("--boom", _ => throw new InvalidOperationException("handler failed"), "Trigger failure.");
 
-        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "--boom" }), "handler failures should surface as CliError");
-        Assert.Equal(error.Option, "--boom", "CliError should surface the failing option");
-        Assert.Contains(error.Message, "option '--boom': handler failed", "CliError should preserve the handler failure message");
+        CliError error = TestAssert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "--boom" }), "handler failures should surface as CliError");
+        TestAssert.Equal(error.Option, "--boom", "CliError should surface the failing option");
+        TestAssert.Contains(error.Message, "option '--boom': handler failed", "CliError should preserve the handler failure message");
     }
 
     private static void TestPositionalHandlerExceptionThrowsCliError()
@@ -243,9 +265,9 @@ internal static class ApiTests
         Parser parser = new Parser();
         parser.SetPositionalHandler(_ => throw new InvalidOperationException("positionals failed"));
 
-        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "input.txt" }), "positional failures should surface as CliError");
-        Assert.Equal(error.Option, string.Empty, "positional handler failures should not report an option token");
-        Assert.Contains(error.Message, "positionals failed", "positional handler failures should preserve the original message");
+        CliError error = TestAssert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "input.txt" }), "positional failures should surface as CliError");
+        TestAssert.Equal(error.Option, string.Empty, "positional handler failures should not report an option token");
+        TestAssert.Contains(error.Message, "positionals failed", "positional handler failures should preserve the original message");
     }
 
     private static void TestPositionalHandlerPreservesExplicitEmptyTokens()
@@ -255,7 +277,7 @@ internal static class ApiTests
         parser.SetPositionalHandler(context => tokens.AddRange(context.ValueTokens));
         parser.ParseOrThrow(new[] { "first", string.Empty, "last" });
 
-        Assert.Equal(string.Join("|", tokens), "first||last", "positional handlers should preserve explicit empty tokens");
+        TestAssert.Equal(string.Join("|", tokens), "first||last", "positional handlers should preserve explicit empty tokens");
     }
 
     private static void TestDoubleDashRemainsUnknown()
@@ -263,70 +285,7 @@ internal static class ApiTests
         Parser parser = new Parser();
         parser.AddAlias("-v", "--verbose");
         parser.SetHandler("--verbose", _ => { }, "Enable verbose logging.");
-        CliError error = Assert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "--", "-v" }), "double dash should remain an unknown option");
-        Assert.Equal(error.Option, "--", "double dash should be reported as the failing option");
-    }
-
-    private static string CaptureStdout(Action action)
-    {
-        StringWriter writer = new StringWriter();
-        TextWriter previous = Console.Out;
-        try
-        {
-            Console.SetOut(writer);
-            action();
-            return writer.ToString();
-        }
-        finally
-        {
-            Console.SetOut(previous);
-        }
-    }
-}
-
-internal static class Assert
-{
-    public static void True(bool condition, string message)
-    {
-        if (!condition)
-        {
-            throw new InvalidOperationException(message);
-        }
-    }
-
-    public static void Equal<T>(T actual, T expected, string message)
-    {
-        if (!EqualityComparer<T>.Default.Equals(actual, expected))
-        {
-            throw new InvalidOperationException($"{message}\nexpected: {expected}\nactual:   {actual}");
-        }
-    }
-
-    public static void Contains(string actual, string needle, string message)
-    {
-        if ((actual ?? string.Empty).Contains(needle, StringComparison.Ordinal))
-        {
-            return;
-        }
-        throw new InvalidOperationException($"{message}\nmissing: {needle}\nactual:  {actual}");
-    }
-
-    public static T Throws<T>(Action action, string message)
-        where T : Exception
-    {
-        try
-        {
-            action();
-        }
-        catch (T ex)
-        {
-            return ex;
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"{message}\nexpected: {typeof(T).Name}\nactual:   {ex.GetType().Name}");
-        }
-
-        throw new InvalidOperationException($"{message}\nexpected: {typeof(T).Name}\nactual:   none");
+        CliError error = TestAssert.Throws<CliError>(() => parser.ParseOrThrow(new[] { "--", "-v" }), "double dash should remain an unknown option");
+        TestAssert.Equal(error.Option, "--", "double dash should be reported as the failing option");
     }
 }

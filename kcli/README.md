@@ -50,6 +50,11 @@ parser.ParseOrExit(args);
 kbuild --build-latest
 ```
 
+SDK output:
+
+- `build/latest/sdk/lib/Kcli.dll`
+- `build/latest/tests/bin/Kcli.Tests.dll`
+
 ## Build And Run Demos
 
 ```bash
@@ -78,8 +83,24 @@ Useful demo commands:
 ./demo/exe/omega/build/latest/test --build
 ```
 
+## Run Tests
+
+```bash
+dotnet build/latest/tests/bin/Kcli.Tests.dll
+```
+
 ## Layout
 
 - Public API and implementation: `src/`
 - API tests: `tests/src/`
 - Demo builds: `demo/`
+
+Working references:
+
+- `src/Kcli/Parser.cs`
+- `src/Kcli/InlineParser.cs`
+- `src/Kcli/ParseEngine.cs`
+- `tests/src/Kcli.Tests/Program.cs`
+- `demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs`
+- `demo/exe/core/src/Kcli/Demo/Core/Program.cs`
+- `demo/exe/omega/src/Kcli/Demo/Omega/Program.cs`

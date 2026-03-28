@@ -1,22 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <AssemblyName>Ktrace.Tests</AssemblyName>
-    <RootNamespace>Ktrace.Tests</RootNamespace>
-    <OutputType>Exe</OutputType>
-    <Nullable>disable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <UseAppHost>false</UseAppHost>
-    <OutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/build/latest/tests/bin</OutputPath>
-    <BaseIntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/build/latest/tests/obj</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/build/latest/tests/obj</IntermediateOutputPath>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="/home/karmak/dev/ktools/ktools-csharp/ktrace/tests/src/Ktrace.Tests/Program.cs" Link="../../../../tests/src/Ktrace.Tests/Program.cs" />
-  </ItemGroup>
+    <Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <AssemblyName>Ktrace.Tests</AssemblyName>
+        <RootNamespace>Ktrace.Tests</RootNamespace>
+        <OutputType>Exe</OutputType>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <UseAppHost>false</UseAppHost>
+        <OutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/build/latest/tests/bin</OutputPath>
+      </PropertyGroup>
+      <ItemGroup>
+        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/ktrace/tests/src/Ktrace.Tests/Program.cs" Link="../../../../tests/src/Ktrace.Tests/Program.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/ktrace/../test-common/src/Ktools/CSharp/Tests/TestSupport.cs" Link="../../../../../test-common/src/Ktools/CSharp/Tests/TestSupport.cs" />
+      </ItemGroup>
   <ItemGroup>
     <Reference Include="Ktrace">
       <HintPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/build/latest/sdk/lib/Ktrace.dll</HintPath>

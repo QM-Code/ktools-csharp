@@ -23,12 +23,18 @@ kbuild --batch --build-latest
 kbuild --batch --clean-latest
 ```
 
+`kbuild --batch` is the safest way to build the full C# workspace because it
+preserves dependency order: `kcli` before `ktrace`.
+
 Use an individual child repo when you only need one SDK:
 
 ```bash
 cd kcli
 kbuild --build-latest
 ```
+
+If you build `ktrace/` directly, build `../kcli/` first or ensure
+`../kcli/build/<slot>/sdk/lib/Kcli.dll` already exists.
 
 The C# backend currently expects the `dotnet` CLI to be available for actual builds.
 

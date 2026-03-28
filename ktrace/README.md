@@ -48,6 +48,21 @@ parser.ParseOrExit(args);
 kbuild --build-latest
 ```
 
+From the workspace root, prefer:
+
+```bash
+cd ..
+kbuild --batch --build-latest
+```
+
+`ktrace/` depends on the sibling `kcli/` SDK. Component-local `ktrace`
+builds expect `../kcli/build/<slot>/sdk/lib/Kcli.dll` to already exist.
+
+SDK output:
+
+- `build/latest/sdk/lib/Ktrace.dll`
+- `build/latest/tests/bin/Ktrace.Tests.dll`
+
 ## Build And Run Demos
 
 ```bash
@@ -77,11 +92,28 @@ Trace CLI examples:
 ./demo/exe/omega/build/latest/test --trace-colors
 ```
 
+## Run Tests
+
+```bash
+dotnet build/latest/tests/bin/Ktrace.Tests.dll
+```
+
 ## Layout
 
 - Public API and implementation: `src/`
 - API tests: `tests/src/`
 - Demo builds: `demo/`
+
+Working references:
+
+- `src/Ktrace/TraceLogger.cs`
+- `src/Ktrace/Logger.cs`
+- `src/Ktrace/TraceSelector.cs`
+- `src/Ktrace/TraceFormatter.cs`
+- `tests/src/Ktrace.Tests/Program.cs`
+- `demo/sdk/alpha/src/Ktrace/Demo/Alpha/AlphaTrace.cs`
+- `demo/exe/core/src/Ktrace/Demo/Core/Program.cs`
+- `demo/exe/omega/src/Ktrace/Demo/Omega/Program.cs`
 
 ## API Model
 

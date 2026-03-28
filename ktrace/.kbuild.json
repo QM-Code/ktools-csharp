@@ -12,7 +12,8 @@
       "src"
     ],
     "test_roots": [
-      "tests/src"
+      "tests/src",
+      "../test-common/src"
     ],
     "demo_root": "demo",
     "assembly_name": "Ktrace",

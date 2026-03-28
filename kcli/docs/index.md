@@ -66,9 +66,20 @@ Use `ParseOrThrow()` when:
 - you want to test parse failures directly
 - you want to intercept handler failures as exceptions
 
+## Build And Explore
+
+```bash
+kbuild --build-latest
+dotnet build/latest/tests/bin/Kcli.Tests.dll
+./demo/exe/core/build/latest/test --alpha-message "hello"
+./demo/exe/omega/build/latest/test --build
+```
+
 ## Working References
 
-- [`src/Kcli/Kcli.cs`](../src/Kcli/Kcli.cs)
+- [`src/Kcli/Parser.cs`](../src/Kcli/Parser.cs)
+- [`src/Kcli/InlineParser.cs`](../src/Kcli/InlineParser.cs)
+- [`src/Kcli/ParseEngine.cs`](../src/Kcli/ParseEngine.cs)
 - [`tests/src/Kcli.Tests/Program.cs`](../tests/src/Kcli.Tests/Program.cs)
 - [`demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs`](../demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs)
 - [`demo/bootstrap/src/Kcli/Demo/Bootstrap/Program.cs`](../demo/bootstrap/src/Kcli/Demo/Bootstrap/Program.cs)

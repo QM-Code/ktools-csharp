@@ -1,7 +1,11 @@
 # API Guide
 
-This page summarizes the public C# API in
-[`src/Kcli/Kcli.cs`](../src/Kcli/Kcli.cs).
+This page summarizes the public C# API in the `src/Kcli/` implementation,
+primarily:
+
+- [`src/Kcli/Parser.cs`](../src/Kcli/Parser.cs)
+- [`src/Kcli/InlineParser.cs`](../src/Kcli/InlineParser.cs)
+- [`src/Kcli/ParseEngine.cs`](../src/Kcli/ParseEngine.cs)
 
 ## Core Types
 

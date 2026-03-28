@@ -11,8 +11,6 @@
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <UseAppHost>false</UseAppHost>
         <OutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/exe/omega/build/latest/bin</OutputPath>
-        <BaseIntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/exe/omega/build/latest/obj</BaseIntermediateOutputPath>
-        <IntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/exe/omega/build/latest/obj</IntermediateOutputPath>
       </PropertyGroup>
       <ItemGroup>
         <Compile Include="/home/karmak/dev/ktools/ktools-csharp/ktrace/demo/common/src/Ktrace/Demo/Common/TraceDemoSupport.cs" Link="../../../../../common/src/Ktrace/Demo/Common/TraceDemoSupport.cs" />

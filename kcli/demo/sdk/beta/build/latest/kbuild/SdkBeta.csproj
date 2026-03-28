@@ -11,8 +11,6 @@
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <UseAppHost>false</UseAppHost>
         <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/beta/build/latest/sdk/lib</OutputPath>
-        <BaseIntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/beta/build/latest/obj</BaseIntermediateOutputPath>
-        <IntermediateOutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/beta/build/latest/obj</IntermediateOutputPath>
       </PropertyGroup>
       <ItemGroup>
         <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/common/src/Kcli/Demo/Common/DemoSupport.cs" Link="../../../../../common/src/Kcli/Demo/Common/DemoSupport.cs" />

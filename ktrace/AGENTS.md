@@ -39,3 +39,7 @@ kbuild --build-latest
 kbuild --build-demos
 kbuild --clean-latest
 ```
+
+When working inside `ktrace/`, remember that the generated C# build expects the
+sibling `../kcli/build/<slot>/sdk/lib/Kcli.dll` to exist. Build `../kcli/`
+first or use the workspace-root `kbuild --batch --build-latest` flow.

@@ -1,7 +1,12 @@
 # API Guide
 
-This page summarizes the public C# API in
-[`src/Ktrace/Ktrace.cs`](../src/Ktrace/Ktrace.cs).
+This page summarizes the public C# API in the `src/Ktrace/` implementation,
+primarily:
+
+- [`src/Ktrace/TraceLogger.cs`](../src/Ktrace/TraceLogger.cs)
+- [`src/Ktrace/Logger.cs`](../src/Ktrace/Logger.cs)
+- [`src/Ktrace/TraceSelector.cs`](../src/Ktrace/TraceSelector.cs)
+- [`src/Ktrace/TraceFormatter.cs`](../src/Ktrace/TraceFormatter.cs)
 
 ## Core Types
 
@@ -177,4 +182,4 @@ Formatting rules:
 
 - `TraceLogger` is the library-facing type; `Logger` is the executable-facing runtime.
 - Channel and namespace validation is strict and intentionally aligned with the broader ktools model.
-- The docs here describe the current C# surface; the authoritative implementation is still [`src/Ktrace/Ktrace.cs`](../src/Ktrace/Ktrace.cs).
+- The docs here describe the current C# surface; the authoritative implementation lives under [`src/Ktrace/`](../src/Ktrace/).

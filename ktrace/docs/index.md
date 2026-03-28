@@ -82,9 +82,29 @@ Examples:
 - Child channels inherit the nearest registered parent color unless they declare their own color.
 - `--trace-colors` prints the full available catalog at runtime.
 
+## Build And Explore
+
+From the workspace root:
+
+```bash
+kbuild --batch --build-latest
+```
+
+From `ktrace/` after `../kcli/` has already been built:
+
+```bash
+kbuild --build-latest
+dotnet build/latest/tests/bin/Ktrace.Tests.dll
+./demo/exe/omega/build/latest/test --trace '*.*'
+./demo/exe/omega/build/latest/test --trace-functions
+```
+
 ## Working References
 
-- [`src/Ktrace/Ktrace.cs`](../src/Ktrace/Ktrace.cs)
+- [`src/Ktrace/TraceLogger.cs`](../src/Ktrace/TraceLogger.cs)
+- [`src/Ktrace/Logger.cs`](../src/Ktrace/Logger.cs)
+- [`src/Ktrace/TraceSelector.cs`](../src/Ktrace/TraceSelector.cs)
+- [`src/Ktrace/TraceFormatter.cs`](../src/Ktrace/TraceFormatter.cs)
 - [`tests/src/Ktrace.Tests/Program.cs`](../tests/src/Ktrace.Tests/Program.cs)
 - [`demo/exe/core/src/Ktrace/Demo/Core/Program.cs`](../demo/exe/core/src/Ktrace/Demo/Core/Program.cs)
 - [`demo/exe/omega/src/Ktrace/Demo/Omega/Program.cs`](../demo/exe/omega/src/Ktrace/Demo/Omega/Program.cs)

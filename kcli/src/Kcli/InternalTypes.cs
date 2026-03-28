@@ -1,0 +1,161 @@
+using System;
+using System.Collections.Generic;
+
+namespace Kcli;
+
+internal enum ValueArity
+{
+    Required,
+    Optional,
+}
+
+internal enum InvocationKind
+{
+    Flag,
+    Value,
+    Positional,
+    PrintHelp,
+}
+
+internal enum InlineTokenKind
+{
+    None,
+    BareRoot,
+    DashOption,
+}
+
+internal sealed class CommandBinding
+{
+    public bool ExpectsValue { get; set; }
+    public FlagHandler FlagHandler { get; set; }
+    public ValueHandler ValueHandler { get; set; }
+    public ValueArity ValueArity { get; set; } = ValueArity.Required;
+    public string Description { get; set; } = string.Empty;
+
+    public CommandBinding Clone()
+    {
+        return new CommandBinding
+        {
+            ExpectsValue = ExpectsValue,
+            FlagHandler = FlagHandler,
+            ValueHandler = ValueHandler,
+            ValueArity = ValueArity,
+            Description = Description,
+        };
+    }
+}
+
+internal sealed class AliasBinding
+{
+    public string Alias { get; set; } = string.Empty;
+    public string TargetToken { get; set; } = string.Empty;
+    public List<string> PresetTokens { get; } = new List<string>();
+
+    public AliasBinding Clone()
+    {
+        AliasBinding copy = new AliasBinding
+        {
+            Alias = Alias,
+            TargetToken = TargetToken,
+        };
+        copy.PresetTokens.AddRange(PresetTokens);
+        return copy;
+    }
+}
+
+internal sealed class ParserData
+{
+    public Dictionary<string, AliasBinding> Aliases { get; } = new Dictionary<string, AliasBinding>(StringComparer.Ordinal);
+    public Dictionary<string, CommandBinding> Commands { get; } = new Dictionary<string, CommandBinding>(StringComparer.Ordinal);
+    public List<string> CommandOrder { get; } = new List<string>();
+    public Dictionary<string, InlineParserData> InlineParsers { get; } = new Dictionary<string, InlineParserData>(StringComparer.Ordinal);
+    public List<string> InlineParserOrder { get; } = new List<string>();
+    public PositionalHandler PositionalHandler { get; set; }
+}
+
+internal sealed class InlineParserData
+{
+    public string RootName { get; set; } = string.Empty;
+    public ValueHandler RootValueHandler { get; set; }
+    public string RootValuePlaceholder { get; set; } = string.Empty;
+    public string RootValueDescription { get; set; } = string.Empty;
+    public Dictionary<string, CommandBinding> Commands { get; } = new Dictionary<string, CommandBinding>(StringComparer.Ordinal);
+    public List<string> CommandOrder { get; } = new List<string>();
+
+    public InlineParserData Clone()
+    {
+        InlineParserData copy = new InlineParserData
+        {
+            RootName = RootName,
+            RootValueHandler = RootValueHandler,
+            RootValuePlaceholder = RootValuePlaceholder,
+            RootValueDescription = RootValueDescription,
+        };
+
+        foreach (string command in CommandOrder)
+        {
+            copy.CommandOrder.Add(command);
+            copy.Commands[command] = Commands[command].Clone();
+        }
+
+        return copy;
+    }
+}
+
+internal sealed class MutableParseOutcome
+{
+    public bool Ok { get; private set; } = true;
+    public string ErrorOption { get; private set; } = string.Empty;
+    public string ErrorMessage { get; private set; } = string.Empty;
+
+    public void ReportError(string option, string message)
+    {
+        if (!Ok)
+        {
+            return;
+        }
+
+        Ok = false;
+        ErrorOption = option ?? string.Empty;
+        ErrorMessage = message ?? string.Empty;
+    }
+}
+
+internal sealed class Invocation
+{
+    public InvocationKind Kind { get; set; }
+    public string Root { get; set; } = string.Empty;
+    public string Option { get; set; } = string.Empty;
+    public string Command { get; set; } = string.Empty;
+    public List<string> ValueTokens { get; } = new List<string>();
+    public FlagHandler FlagHandler { get; set; }
+    public ValueHandler ValueHandler { get; set; }
+    public PositionalHandler PositionalHandler { get; set; }
+    public List<HelpRow> HelpRows { get; } = new List<HelpRow>();
+}
+
+internal sealed class CollectedValues
+{
+    public bool HasValue { get; set; }
+    public List<string> Parts { get; } = new List<string>();
+    public int LastIndex { get; set; } = -1;
+}
+
+internal sealed class HelpRow
+{
+    public HelpRow(string lhs, string rhs)
+    {
+        Lhs = lhs;
+        Rhs = rhs;
+    }
+
+    public string Lhs { get; }
+    public string Rhs { get; }
+}
+
+internal sealed class InlineTokenMatch
+{
+    public InlineTokenKind Kind { get; set; }
+    public InlineParserData Parser { get; set; }
+    public string Suffix { get; set; } = string.Empty;
+}
