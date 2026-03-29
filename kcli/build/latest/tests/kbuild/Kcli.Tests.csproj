@@ -13,7 +13,17 @@
         <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/tests/bin</OutputPath>
       </PropertyGroup>
       <ItemGroup>
-        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/Program.cs" Link="../../../../tests/src/Kcli.Tests/Program.cs" />
+        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/AliasBehaviorTests.cs" Link="../../../../tests/src/Kcli.Tests/AliasBehaviorTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/ApiBehaviorTests.cs" Link="../../../../tests/src/Kcli.Tests/ApiBehaviorTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/BootstrapDemoTests.cs" Link="../../../../tests/src/Kcli.Tests/BootstrapDemoTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/CoreDemoTests.cs" Link="../../../../tests/src/Kcli.Tests/CoreDemoTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/DemoParserFactory.cs" Link="../../../../tests/src/Kcli.Tests/DemoParserFactory.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/ErrorBehaviorTests.cs" Link="../../../../tests/src/Kcli.Tests/ErrorBehaviorTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/InlineParserTests.cs" Link="../../../../tests/src/Kcli.Tests/InlineParserTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/KcliTests.cs" Link="../../../../tests/src/Kcli.Tests/KcliTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/OmegaDemoTests.cs" Link="../../../../tests/src/Kcli.Tests/OmegaDemoTests.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/Program.cs" Link="../../../../tests/src/Kcli.Tests/Program.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/tests/src/Kcli.Tests/ValueHandlingTests.cs" Link="../../../../tests/src/Kcli.Tests/ValueHandlingTests.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/../test-common/src/Ktools/CSharp/Tests/TestSupport.cs" Link="../../../../../test-common/src/Ktools/CSharp/Tests/TestSupport.cs" />
       </ItemGroup>
   <ItemGroup>

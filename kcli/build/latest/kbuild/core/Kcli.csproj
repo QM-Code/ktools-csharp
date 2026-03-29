@@ -13,14 +13,22 @@
         <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib</OutputPath>
       </PropertyGroup>
       <ItemGroup>
-        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/CliConsole.cs" Link="../../../../src/Kcli/CliConsole.cs" />
+        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Bindings.cs" Link="../../../../src/Kcli/Bindings.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/CliConsole.cs" Link="../../../../src/Kcli/CliConsole.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/CliError.cs" Link="../../../../src/Kcli/CliError.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Delegates.cs" Link="../../../../src/Kcli/Delegates.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/HandlerContext.cs" Link="../../../../src/Kcli/HandlerContext.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/HelpRow.cs" Link="../../../../src/Kcli/HelpRow.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/InlineParser.cs" Link="../../../../src/Kcli/InlineParser.cs" />
-<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/InternalTypes.cs" Link="../../../../src/Kcli/InternalTypes.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/InlineTokenClassification.cs" Link="../../../../src/Kcli/InlineTokenClassification.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Invocations.cs" Link="../../../../src/Kcli/Invocations.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Normalization.cs" Link="../../../../src/Kcli/Normalization.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseEngine.Execution.cs" Link="../../../../src/Kcli/ParseEngine.Execution.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseEngine.Help.cs" Link="../../../../src/Kcli/ParseEngine.Help.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseEngine.Scheduling.cs" Link="../../../../src/Kcli/ParseEngine.Scheduling.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseEngine.TokenCollection.cs" Link="../../../../src/Kcli/ParseEngine.TokenCollection.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseEngine.cs" Link="../../../../src/Kcli/ParseEngine.cs" />
+<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/ParseOutcome.cs" Link="../../../../src/Kcli/ParseOutcome.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Parser.cs" Link="../../../../src/Kcli/Parser.cs" />
 <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/src/Kcli/Registration.cs" Link="../../../../src/Kcli/Registration.cs" />
       </ItemGroup>

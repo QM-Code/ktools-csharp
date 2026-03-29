@@ -9,21 +9,6 @@ internal enum ValueArity
     Optional,
 }
 
-internal enum InvocationKind
-{
-    Flag,
-    Value,
-    Positional,
-    PrintHelp,
-}
-
-internal enum InlineTokenKind
-{
-    None,
-    BareRoot,
-    DashOption,
-}
-
 internal sealed class CommandBinding
 {
     public bool ExpectsValue { get; set; }
@@ -100,62 +85,4 @@ internal sealed class InlineParserData
 
         return copy;
     }
-}
-
-internal sealed class MutableParseOutcome
-{
-    public bool Ok { get; private set; } = true;
-    public string ErrorOption { get; private set; } = string.Empty;
-    public string ErrorMessage { get; private set; } = string.Empty;
-
-    public void ReportError(string option, string message)
-    {
-        if (!Ok)
-        {
-            return;
-        }
-
-        Ok = false;
-        ErrorOption = option ?? string.Empty;
-        ErrorMessage = message ?? string.Empty;
-    }
-}
-
-internal sealed class Invocation
-{
-    public InvocationKind Kind { get; set; }
-    public string Root { get; set; } = string.Empty;
-    public string Option { get; set; } = string.Empty;
-    public string Command { get; set; } = string.Empty;
-    public List<string> ValueTokens { get; } = new List<string>();
-    public FlagHandler FlagHandler { get; set; }
-    public ValueHandler ValueHandler { get; set; }
-    public PositionalHandler PositionalHandler { get; set; }
-    public List<HelpRow> HelpRows { get; } = new List<HelpRow>();
-}
-
-internal sealed class CollectedValues
-{
-    public bool HasValue { get; set; }
-    public List<string> Parts { get; } = new List<string>();
-    public int LastIndex { get; set; } = -1;
-}
-
-internal sealed class HelpRow
-{
-    public HelpRow(string lhs, string rhs)
-    {
-        Lhs = lhs;
-        Rhs = rhs;
-    }
-
-    public string Lhs { get; }
-    public string Rhs { get; }
-}
-
-internal sealed class InlineTokenMatch
-{
-    public InlineTokenKind Kind { get; set; }
-    public InlineParserData Parser { get; set; }
-    public string Suffix { get; set; } = string.Empty;
 }
