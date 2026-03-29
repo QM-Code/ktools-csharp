@@ -23,41 +23,37 @@ naming style.
 
 ## Current Gaps
 
-- A large amount of generated output is still tracked under `ktrace/build/latest`
-  and `ktrace/demo/**/build/latest`.
-- `ktrace/demo/common/` exists and is the wrong demo structure.
-- The test surface is still concentrated in one `tests/src/Ktrace.Tests/Program.cs`
-  file.
-- The implementation needs a deliberate parity audit against the full C++
-  contract for selectors, logger behavior, output formatting, and CLI
-  integration.
+- The repo is much cleaner now, but it still needs a deliberate parity audit
+  against the full C++ contract for selectors, logger behavior, output
+  formatting, and CLI integration.
+- The split test suite should be checked for any remaining gaps in explicit
+  bootstrap/core/omega demo-contract coverage.
+- Local docs and examples should be rechecked so they point reviewers at the
+  current structure and behavior directly.
+- Only narrow structural polish should remain; any further refactor has to
+  justify itself clearly.
 
 ## Work Plan
 
-1. Clean repo hygiene aggressively.
-- Remove tracked build products from `build/latest` and demo build trees.
-- Tighten ignore rules so generated output does not return.
-- Make the handwritten source tree the dominant shape of the repo again.
-
-2. Eliminate shared demo code.
-- Remove `ktrace/demo/common/`.
-- Make `demo/sdk/alpha`, `demo/sdk/beta`, and `demo/sdk/gamma` self-contained.
-- Keep bootstrap logic under `demo/bootstrap/`.
-- Keep composition logic under `demo/exe/core/` and `demo/exe/omega/`.
-- Do not replace `demo/common/` with another disguised shared demo layer.
-
-3. Re-audit behavior parity with C++.
+1. Re-audit behavior parity with C++.
 - Compare C# behavior against the C++ contract for channel registration,
   selector parsing, unmatched-selector warnings, logger/trace-source
   attachment, `traceChanged(...)`, output options, and the generated
   `--trace-*` surface.
 - Add focused tests where a reference behavior is not asserted directly.
 
-4. Improve test and doc discoverability where it helps.
-- Split tests by concern if that makes failures easier to localize.
-- Update local docs if they still hide important behavior or structure.
+2. Tighten explicit contract coverage.
+- Review whether bootstrap/core/omega demo behavior is asserted directly enough
+  rather than only through general API/CLI tests.
+- Add focused coverage where the current tests still leave demo behavior
+  implicit.
 
-5. Apply only narrow structural polish.
+3. Reconcile docs with the actual repo shape.
+- Update `ktrace/README.md`, docs pages, and examples if they still assume more
+  reader inference than necessary.
+- Keep reviewers pointed at the real current source and test files.
+
+4. Apply only narrow structural polish.
 - Keep the current library layout if it remains readable.
 - Only rename or move files when that clearly improves navigability.
 
@@ -76,6 +72,6 @@ naming style.
 
 ## Done When
 
-- Generated build output no longer obscures the repo.
-- Shared demo code is gone.
 - Tests, demos, and docs together make C# easy to compare with C++.
+- Demo-contract coverage is explicit rather than assumed.
+- Any further structural change is clearly justified by readability.
