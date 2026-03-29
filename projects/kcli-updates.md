@@ -2,8 +2,8 @@
 
 ## Mission
 
-Bring `ktools-csharp/kcli/` structurally up to the level of the C++ reference
-while preserving the current C# API shape and .NET naming style.
+Make `ktools-csharp/kcli/` clean, reviewable, and easy to compare against the
+C++ reference while preserving the current C# API shape and .NET naming style.
 
 ## Required Reading
 
@@ -17,54 +17,49 @@ while preserving the current C# API shape and .NET naming style.
 
 ## Current Gaps
 
-- Core internals are too concentrated in `kcli/src/Kcli/ParseEngine.cs`.
-- Multiple model and helper types are packed into
-  `kcli/src/Kcli/InternalTypes.cs`.
-- All test coverage is routed through one file:
-  `kcli/tests/src/Kcli.Tests/Program.cs`.
-- The repo contains tracked build output under `kcli/build/latest` and
-  `kcli/demo/**/build/latest`, which makes the implementation harder to review.
+- A large amount of generated output is still tracked under `kcli/build/latest`
+  and `kcli/demo/**/build/latest`.
+- `kcli/README.md` still points readers at the old monolithic
+  `ParseEngine.cs`/`Program.cs` layout instead of the current split source and
+  test files.
+- The parser internals are now split, but the repo still needs a deliberate
+  parity audit against the full C++ contract.
+- Demo layout and documentation should be rechecked as contract material, not
+  just examples.
 
 ## Work Plan
 
-1. Refactor the core source layout.
-- Split `InternalTypes.cs` into dedicated files for bindings, parse outcome,
-  invocations, token classification, and help rows.
-- Split `ParseEngine.cs` into smaller units if that can be done without making
-  control flow harder to follow.
-- Keep the public entrypoints in `Parser.cs` and `InlineParser.cs` clean and
-  small, closer to the reference layout.
+1. Clean repo hygiene aggressively.
+- Remove tracked build products from `build/latest` and demo build trees.
+- Tighten ignore rules so generated output does not return.
+- Make the hand-maintained source tree the dominant shape of the repo again.
 
-2. Improve test structure.
-- Replace the single `Program.cs` test harness with multiple test files grouped
-  by concern: API behavior, bootstrap/demo behavior, core demo behavior, omega
-  demo behavior, and test support.
-- Preserve current coverage while making failures easier to localize.
-- Add missing tests where C++ behavior is documented but not asserted in C#.
+2. Reconcile docs with the actual layout.
+- Update `kcli/README.md` and any other local docs that still reference the old
+  file structure.
+- Point reviewers at the real current parser/test files.
 
-3. Tighten repo hygiene.
-- Remove tracked build products from source control if possible.
-- If some staged outputs are intentionally versioned, document why and keep that
-  policy narrow.
-- Make the hand-maintained source tree stand out from generated outputs.
+3. Re-audit behavior parity with C++.
+- Compare C# behavior against the C++ docs and test contract for help output,
+  alias expansion, inline roots, root value handlers, optional/required value
+  handling, double-dash rejection, and validation-before-handler execution.
+- Add focused tests where a documented reference behavior is not yet asserted.
 
-4. Confirm demo parity with C++.
-- Check that bootstrap, sdk, and executable demo scenarios match the C++
-  contract.
-- Ensure the C# demo layout stays aligned with the reference naming and role of
-  each demo.
+4. Review demo parity with the reference.
+- Confirm that bootstrap, sdk, and executable demos still match the reference
+  roles and naming.
+- Tighten demo README files if they leave behavior implicit.
 
-5. Reconcile behavior details.
-- Match C++ semantics for help, alias expansion, inline roots, required values,
-  optional values, error text, and validation-before-handler execution.
-- Preserve C#-idiomatic naming while keeping conceptual parity.
+5. Apply only narrow structural polish.
+- Keep the current split parser layout if it remains readable.
+- Only rename or move files when that clearly improves navigability for
+  reviewers and porters.
 
 ## Constraints
 
-- Do not weaken the current public API without a strong reason.
+- Do not weaken the public API without a strong reason.
 - Keep demo behavior aligned with the reference.
-- Prefer narrower files and clearer boundaries over introducing abstraction for
-  its own sake.
+- Prefer targeted cleanup over another broad refactor.
 
 ## Validation
 
@@ -75,7 +70,6 @@ while preserving the current C# API shape and .NET naming style.
 
 ## Done When
 
-- The core parser internals are easier to navigate than they are today.
-- Tests are split by scenario instead of concentrated in one file.
-- Repo noise from generated artifacts is substantially reduced.
-- A reviewer can compare C# to C++ without fighting the repo layout.
+- Generated build output no longer obscures the repo.
+- README/docs point at the real current structure.
+- Tests, demos, and docs together make C# easy to compare with C++.

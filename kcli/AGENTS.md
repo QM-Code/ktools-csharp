@@ -38,3 +38,6 @@ kbuild --build-latest
 kbuild --build-demos
 kbuild --clean-latest
 ```
+
+After a coherent batch of changes in `ktools-csharp/kcli/`, return to the
+`ktools-csharp/` workspace root and run `kbuild --git-sync "<message>"`.

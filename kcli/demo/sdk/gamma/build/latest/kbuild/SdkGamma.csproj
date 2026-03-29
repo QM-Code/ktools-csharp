@@ -1,21 +1,20 @@
-    <Project Sdk="Microsoft.NET.Sdk">
-      <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
-        <AssemblyName>SdkGamma</AssemblyName>
-        <RootNamespace>SdkGamma</RootNamespace>
-        <OutputType>Library</OutputType>
-        <Nullable>disable</Nullable>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <UseAppHost>false</UseAppHost>
-        <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/gamma/build/latest/sdk/lib</OutputPath>
-      </PropertyGroup>
-      <ItemGroup>
-        <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/common/src/Kcli/Demo/Common/DemoSupport.cs" Link="../../../../../common/src/Kcli/Demo/Common/DemoSupport.cs" />
-<Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/gamma/src/Kcli/Demo/Gamma/GammaSdk.cs" Link="../../../src/Kcli/Demo/Gamma/GammaSdk.cs" />
-      </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>SdkGamma</AssemblyName>
+    <RootNamespace>SdkGamma</RootNamespace>
+    <OutputType>Library</OutputType>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseAppHost>false</UseAppHost>
+    <OutputPath>/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/gamma/build/latest/sdk/lib</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="/home/karmak/dev/ktools/ktools-csharp/kcli/demo/sdk/gamma/src/Kcli/Demo/Gamma/GammaSdk.cs" Link="../../../src/Kcli/Demo/Gamma/GammaSdk.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Kcli">
       <HintPath>/home/karmak/dev/ktools/ktools-csharp/kcli/build/latest/sdk/lib/Kcli.dll</HintPath>
