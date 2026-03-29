@@ -1,7 +1,6 @@
 using Kcli;
 using Ktrace;
 using Ktrace.Demo.Alpha;
-using Ktrace.Demo.Common;
 
 namespace Ktrace.Demo.Core;
 

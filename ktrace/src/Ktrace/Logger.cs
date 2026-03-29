@@ -32,22 +32,22 @@ public sealed partial class Logger
 
     public void EnableChannel(string qualifiedChannel, string localNamespace = "")
     {
-        ApplyExactChannelMutation(qualifiedChannel, localNamespace, enable: true);
+        ApplyExactChannelMutation(qualifiedChannel, localNamespace, enable: true, SourceContext.Capture(1));
     }
 
     public void EnableChannel(TraceLogger localTraceLogger, string qualifiedChannel)
     {
-        EnableChannel(qualifiedChannel, ResolveLocalNamespace(localTraceLogger));
+        ApplyExactChannelMutation(qualifiedChannel, ResolveLocalNamespace(localTraceLogger), enable: true, SourceContext.Capture(1));
     }
 
     public void EnableChannels(string selectorsCsv, string localNamespace = "")
     {
-        ApplySelectorMutation(selectorsCsv, localNamespace, enable: true);
+        ApplySelectorMutation(selectorsCsv, localNamespace, enable: true, SourceContext.Capture(1));
     }
 
     public void EnableChannels(TraceLogger localTraceLogger, string selectorsCsv)
     {
-        EnableChannels(selectorsCsv, ResolveLocalNamespace(localTraceLogger));
+        ApplySelectorMutation(selectorsCsv, ResolveLocalNamespace(localTraceLogger), enable: true, SourceContext.Capture(1));
     }
 
     public bool ShouldTraceChannel(string qualifiedChannel, string localNamespace = "")
@@ -70,22 +70,22 @@ public sealed partial class Logger
 
     public void DisableChannel(string qualifiedChannel, string localNamespace = "")
     {
-        ApplyExactChannelMutation(qualifiedChannel, localNamespace, enable: false);
+        ApplyExactChannelMutation(qualifiedChannel, localNamespace, enable: false, SourceContext.Capture(1));
     }
 
     public void DisableChannel(TraceLogger localTraceLogger, string qualifiedChannel)
     {
-        DisableChannel(qualifiedChannel, ResolveLocalNamespace(localTraceLogger));
+        ApplyExactChannelMutation(qualifiedChannel, ResolveLocalNamespace(localTraceLogger), enable: false, SourceContext.Capture(1));
     }
 
     public void DisableChannels(string selectorsCsv, string localNamespace = "")
     {
-        ApplySelectorMutation(selectorsCsv, localNamespace, enable: false);
+        ApplySelectorMutation(selectorsCsv, localNamespace, enable: false, SourceContext.Capture(1));
     }
 
     public void DisableChannels(TraceLogger localTraceLogger, string selectorsCsv)
     {
-        DisableChannels(selectorsCsv, ResolveLocalNamespace(localTraceLogger));
+        ApplySelectorMutation(selectorsCsv, ResolveLocalNamespace(localTraceLogger), enable: false, SourceContext.Capture(1));
     }
 
     public void SetOutputOptions(OutputOptions options)
@@ -206,12 +206,12 @@ public sealed partial class Logger
         return localTraceLogger?.Namespace ?? string.Empty;
     }
 
-    private void ApplyExactChannelMutation(string qualifiedChannel, string localNamespace, bool enable)
+    private void ApplyExactChannelMutation(string qualifiedChannel, string localNamespace, bool enable, SourceContext source)
     {
         ExactChannelResolution resolution = TraceSelector.ResolveExactChannelOrThrow(this, qualifiedChannel, localNamespace);
         if (!resolution.Registered)
         {
-            EmitIgnoredExactChannelWarning(localNamespace, resolution.Key, enable);
+            EmitIgnoredExactChannelWarning(localNamespace, resolution.Key, enable, source);
             return;
         }
 
@@ -221,7 +221,7 @@ public sealed partial class Logger
         }
     }
 
-    private void ApplySelectorMutation(string selectorsCsv, string localNamespace, bool enable)
+    private void ApplySelectorMutation(string selectorsCsv, string localNamespace, bool enable, SourceContext source)
     {
         SelectorResolution resolution = TraceSelector.ResolveSelectorExpressionOrThrow(this, selectorsCsv, localNamespace);
         lock (_syncRoot)
@@ -234,7 +234,7 @@ public sealed partial class Logger
 
         foreach (string selector in resolution.UnmatchedSelectors)
         {
-            EmitIgnoredSelectorWarning(localNamespace, selector, enable);
+            EmitIgnoredSelectorWarning(localNamespace, selector, enable, source);
         }
     }
 
@@ -250,16 +250,16 @@ public sealed partial class Logger
         }
     }
 
-    private void EmitIgnoredExactChannelWarning(string localNamespace, string key, bool enable)
+    private void EmitIgnoredExactChannelWarning(string localNamespace, string key, bool enable, SourceContext source)
     {
         string verb = enable ? "enable" : "disable";
-        EmitLog(LogSeverity.Warning, localNamespace, SourceContext.Capture(1), $"{verb} ignored channel '{key}' because it is not registered");
+        EmitLog(LogSeverity.Warning, localNamespace, source, $"{verb} ignored channel '{key}' because it is not registered");
     }
 
-    private void EmitIgnoredSelectorWarning(string localNamespace, string selector, bool enable)
+    private void EmitIgnoredSelectorWarning(string localNamespace, string selector, bool enable, SourceContext source)
     {
         string verb = enable ? "enable" : "disable";
-        EmitLog(LogSeverity.Warning, localNamespace, SourceContext.Capture(1), $"{verb} ignored channel selector '{selector}' because it matched no registered channels");
+        EmitLog(LogSeverity.Warning, localNamespace, source, $"{verb} ignored channel selector '{selector}' because it matched no registered channels");
     }
 
     private void EmitLine(string prefix, string message)

@@ -76,8 +76,22 @@ internal static class TraceCliRenderer
         Console.WriteLine($"  {optionRoot} '*.*'            Select all <namespace>.<channel> channels");
         Console.WriteLine($"  {optionRoot} '*.*.*'          Select all channels up to 2 levels");
         Console.WriteLine($"  {optionRoot} '*.*.*.*'        Select all channels up to 3 levels");
+        Console.WriteLine($"  {optionRoot} 'alpha.*'        Select all top-level channels in alpha");
+        Console.WriteLine($"  {optionRoot} 'alpha.*.*'      Select all channels in alpha (up to 2 levels)");
+        Console.WriteLine($"  {optionRoot} 'alpha.*.*.*'    Select all channels in alpha (up to 3 levels)");
+        Console.WriteLine($"  {optionRoot} '*.net'          Select 'net' across all namespaces");
+        Console.WriteLine($"  {optionRoot} '*.scheduler.tick' Select 'scheduler.tick' across namespaces");
+        Console.WriteLine($"  {optionRoot} '*.net.*'        Select subchannels under 'net' across namespaces");
         Console.WriteLine($"  {optionRoot} '*.{{net,io}}'     Select 'net' and 'io' across all namespaces");
         Console.WriteLine($"  {optionRoot} '{{alpha,beta}}.*' Select all top-level channels in alpha and beta");
+        Console.WriteLine($"  {optionRoot} alpha.net");
+        Console.WriteLine($"  {optionRoot} beta.scheduler.tick");
+        Console.WriteLine($"  {optionRoot} alpha.net,beta.io");
+        Console.WriteLine($"  {optionRoot} gamma.physics.*");
+        Console.WriteLine($"  {optionRoot} gamma.physics.*.*");
+        Console.WriteLine($"  {optionRoot} alpha.{{net,cache}}");
+        Console.WriteLine($"  {optionRoot} beta.{{io,scheduler}}.packet");
+        Console.WriteLine($"  {optionRoot} '{{alpha,beta}}.net'");
         Console.WriteLine();
     }
 }

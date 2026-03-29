@@ -1,5 +1,5 @@
+using System;
 using Ktrace;
-using Ktrace.Demo.Common;
 
 namespace Ktrace.Demo.Bootstrap;
 
@@ -13,6 +13,8 @@ public static class Program
         logger.AddTraceLogger(trace);
         logger.EnableChannel(trace, ".bootstrap");
         trace.Trace("bootstrap", "ktrace bootstrap compile/link check");
-        TraceDemoSupport.PrintSummary("Bootstrap succeeded.");
+        Console.WriteLine();
+        Console.WriteLine("Bootstrap succeeded.");
+        Console.WriteLine();
     }
 }

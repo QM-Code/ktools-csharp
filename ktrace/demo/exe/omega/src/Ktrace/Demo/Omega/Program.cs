@@ -1,8 +1,8 @@
+using System;
 using Kcli;
 using Ktrace;
 using Ktrace.Demo.Alpha;
 using Ktrace.Demo.Beta;
-using Ktrace.Demo.Common;
 using Ktrace.Demo.Gamma;
 
 namespace Ktrace.Demo.Omega;
@@ -43,6 +43,8 @@ public static class Program
         trace.Info("testing...");
         trace.Warn("testing...");
         trace.Error("testing...");
-        TraceDemoSupport.PrintSummary("KTRACE csharp demo omega import/integration check passed");
+        Console.WriteLine();
+        Console.WriteLine("KTRACE csharp demo omega import/integration check passed");
+        Console.WriteLine();
     }
 }
