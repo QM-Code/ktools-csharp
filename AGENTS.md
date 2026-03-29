@@ -31,3 +31,14 @@ This workspace currently contains:
 4. Use the root workspace only for C#-workspace-wide concerns such as batch orchestration, local build-tooling adaptations, or root documentation.
 5. Read the relevant child repo `AGENTS.md` and `README.md` files before changing code in that repo.
 6. If shared build tooling needs C#-specific adaptations, change the sibling `../kbuild/` repo and document the delta for later consolidation.
+
+## Git Sync
+
+Use the shared `kbuild` workflow for commit/push sync from this workspace root:
+
+```bash
+kbuild --git-sync "<message>"
+```
+
+Treat that as the standard sync command unless a more local doc explicitly
+overrides it.
