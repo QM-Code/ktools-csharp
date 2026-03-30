@@ -7,9 +7,9 @@ Assume these have already been read:
 
 `ktools-csharp/kcli/` is the C# implementation of `kcli`.
 
-## What This Repo Owns
+## What This Component Owns
 
-This repo owns the C# API and implementation details for `kcli`, including:
+This component owns the C# API and implementation details for `kcli`, including:
 
 - public C# parser APIs
 - top-level and inline parsing behavior
@@ -18,7 +18,7 @@ This repo owns the C# API and implementation details for `kcli`, including:
 
 ## Local Bootstrap
 
-When familiarizing yourself with this repo, read:
+When familiarizing yourself with this component, read:
 
 - [README.md](README.md)
 - `src/*`
@@ -27,7 +27,7 @@ When familiarizing yourself with this repo, read:
 
 ## Build And Test Expectations
 
-- Use `kbuild` from the repo root for normal builds.
+- Use `kbuild` from the component root for normal builds.
 - Prefer API checks plus demo-driven coverage.
 - Keep behavior aligned with the cross-language `kcli` contract unless there is a strong C# reason not to.
 

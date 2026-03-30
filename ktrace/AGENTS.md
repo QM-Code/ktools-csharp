@@ -7,9 +7,9 @@ Assume these have already been read:
 
 `ktools-csharp/ktrace/` is the C# implementation of `ktrace`.
 
-## What This Repo Owns
+## What This Component Owns
 
-This repo owns the C# API and implementation details for `ktrace`, including:
+This component owns the C# API and implementation details for `ktrace`, including:
 
 - trace/logger API behavior
 - selector parsing and channel enablement semantics
@@ -19,7 +19,7 @@ This repo owns the C# API and implementation details for `ktrace`, including:
 
 ## Local Bootstrap
 
-When familiarizing yourself with this repo, read:
+When familiarizing yourself with this component, read:
 
 - [README.md](README.md)
 - `src/*`
@@ -28,7 +28,7 @@ When familiarizing yourself with this repo, read:
 
 ## Build And Test Expectations
 
-- Use `kbuild` from the repo root for normal builds.
+- Use `kbuild` from the component root for normal builds.
 - Preserve cross-language trace behavior where possible.
 - Keep CLI-facing trace controls aligned with the overview repo and the existing C++ implementation.
 

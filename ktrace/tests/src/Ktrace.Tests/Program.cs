@@ -8,11 +8,7 @@ internal static class Program
     {
         try
         {
-            FormatTests.Run();
-            ChannelTests.Run();
-            LoggingTests.Run();
-            CliTests.Run();
-            ChangedTests.Run();
+            KtraceTests.Run();
             Console.WriteLine("C# ktrace tests passed.");
             return 0;
         }

@@ -100,17 +100,25 @@ dotnet build/latest/tests/bin/Ktrace.Tests.dll
 
 ## Layout
 
-- Public API and implementation: `src/`
-- API tests: `tests/src/`
+- Public API and implementation: `src/Ktrace/`
+- Trace CLI integration split across `Logger.cs`, `Logger.TraceCli.cs`, and `TraceCliRenderer.cs`
+- API tests: `tests/src/Ktrace.Tests/`
 - Demo builds: `demo/`
 
 Working references:
 
 - `src/Ktrace/TraceLogger.cs`
 - `src/Ktrace/Logger.cs`
+- `src/Ktrace/Logger.TraceCli.cs`
 - `src/Ktrace/TraceSelector.cs`
 - `src/Ktrace/TraceFormatter.cs`
-- `tests/src/Ktrace.Tests/Program.cs`
+- `src/Ktrace/TraceCliRenderer.cs`
+- `tests/src/Ktrace.Tests/KtraceTests.cs`
+- `tests/src/Ktrace.Tests/ChannelTests.cs`
+- `tests/src/Ktrace.Tests/CliTests.cs`
+- `tests/src/Ktrace.Tests/BootstrapDemoTests.cs`
+- `tests/src/Ktrace.Tests/CoreDemoTests.cs`
+- `tests/src/Ktrace.Tests/OmegaDemoTests.cs`
 - `demo/sdk/alpha/src/Ktrace/Demo/Alpha/AlphaTrace.cs`
 - `demo/exe/core/src/Ktrace/Demo/Core/Program.cs`
 - `demo/exe/omega/src/Ktrace/Demo/Omega/Program.cs`

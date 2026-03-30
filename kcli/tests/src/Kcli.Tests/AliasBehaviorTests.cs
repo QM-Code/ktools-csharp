@@ -16,6 +16,7 @@ internal static class AliasBehaviorTests
         TestAliasDoesNotRewriteConsumedValueTokens();
         TestAliasAfterDoubleDashStillFailsValidationBeforeHandlersRun();
         TestAliasRejectsInvalidAlias();
+        TestAliasRejectsTargetWithWhitespace();
         TestAliasRejectsInvalidTarget();
         TestAliasRejectsSingleDashTarget();
     }
@@ -139,6 +140,15 @@ internal static class AliasBehaviorTests
             () => parser.AddAlias("-v", "verbose"),
             "aliases should reject targets without a double dash");
         TestAssert.Contains(error.Message, "double-dash form", "alias target normalization errors should describe the accepted shape");
+    }
+
+    private static void TestAliasRejectsTargetWithWhitespace()
+    {
+        Parser parser = new Parser();
+        ArgumentException error = TestAssert.Throws<ArgumentException>(
+            () => parser.AddAlias("-v", "--bad target"),
+            "aliases should reject targets with whitespace");
+        TestAssert.Contains(error.Message, "double-dash form", "whitespace alias targets should surface the standard target error");
     }
 
     private static void TestAliasRejectsSingleDashTarget()

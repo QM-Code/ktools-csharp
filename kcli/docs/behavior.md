@@ -140,6 +140,13 @@ unknown option.
 
 The executable behavior is covered by:
 
-- [`tests/src/Kcli.Tests/Program.cs`](../tests/src/Kcli.Tests/Program.cs)
+- [`tests/src/Kcli.Tests/KcliTests.cs`](../tests/src/Kcli.Tests/KcliTests.cs)
+- [`tests/src/Kcli.Tests/AliasBehaviorTests.cs`](../tests/src/Kcli.Tests/AliasBehaviorTests.cs)
+- [`tests/src/Kcli.Tests/InlineParserTests.cs`](../tests/src/Kcli.Tests/InlineParserTests.cs)
+- [`tests/src/Kcli.Tests/ValueHandlingTests.cs`](../tests/src/Kcli.Tests/ValueHandlingTests.cs)
+- [`tests/src/Kcli.Tests/ErrorBehaviorTests.cs`](../tests/src/Kcli.Tests/ErrorBehaviorTests.cs)
+- [`tests/src/Kcli.Tests/BootstrapDemoTests.cs`](../tests/src/Kcli.Tests/BootstrapDemoTests.cs)
+- [`tests/src/Kcli.Tests/CoreDemoTests.cs`](../tests/src/Kcli.Tests/CoreDemoTests.cs)
+- [`tests/src/Kcli.Tests/OmegaDemoTests.cs`](../tests/src/Kcli.Tests/OmegaDemoTests.cs)
 
 The demo programs under [`../demo/`](../demo/) show complete, compiling usage.

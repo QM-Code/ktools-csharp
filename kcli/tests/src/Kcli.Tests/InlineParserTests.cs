@@ -27,15 +27,22 @@ internal static class InlineParserTests
 
     private static void TestInlineHandlerNormalizationAcceptsShortAndFullForms()
     {
-        string seen = string.Empty;
+        bool flagSeen = false;
+        string valueSeen = string.Empty;
         Parser parser = new Parser();
         InlineParser beta = new InlineParser("--beta");
-        beta.SetHandler("--beta-enable", context => seen = context.Option, "Enable beta mode.");
+        beta.SetHandler("-enable", _ => flagSeen = true, "Enable beta mode.");
+        beta.SetHandler("--beta-profile", (context, value) =>
+        {
+            TestAssert.Equal(context.Option, "--beta-profile", "full-form inline registrations should preserve the effective option");
+            valueSeen = value;
+        }, "Set the beta profile.");
         parser.AddInlineParser(beta);
 
-        parser.ParseOrThrow(new[] { "--beta-enable" });
+        parser.ParseOrThrow(new[] { "--beta-enable", "--beta-profile", "local" });
 
-        TestAssert.Equal(seen, "--beta-enable", "full-form inline handler registration should preserve the effective option");
+        TestAssert.True(flagSeen, "short-form inline registrations should dispatch through the owning root");
+        TestAssert.Equal(valueSeen, "local", "full-form inline registrations should still dispatch value handlers");
     }
 
     private static void TestInlineHandlerNormalizationRejectsWrongRoot()

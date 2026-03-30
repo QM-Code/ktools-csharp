@@ -91,16 +91,26 @@ dotnet build/latest/tests/bin/Kcli.Tests.dll
 
 ## Layout
 
-- Public API and implementation: `src/`
-- API tests: `tests/src/`
+- Public API and implementation: `src/Kcli/`
+- Parse scheduling/help/token handling split across `ParseEngine*.cs`
+- API tests: `tests/src/Kcli.Tests/`
 - Demo builds: `demo/`
 
 Working references:
 
 - `src/Kcli/Parser.cs`
 - `src/Kcli/InlineParser.cs`
-- `src/Kcli/ParseEngine.cs`
-- `tests/src/Kcli.Tests/Program.cs`
+- `src/Kcli/ParseEngine.Scheduling.cs`
+- `src/Kcli/ParseEngine.TokenCollection.cs`
+- `src/Kcli/ParseEngine.Execution.cs`
+- `src/Kcli/ParseEngine.Help.cs`
+- `tests/src/Kcli.Tests/KcliTests.cs`
+- `tests/src/Kcli.Tests/AliasBehaviorTests.cs`
+- `tests/src/Kcli.Tests/InlineParserTests.cs`
+- `tests/src/Kcli.Tests/ValueHandlingTests.cs`
+- `tests/src/Kcli.Tests/ErrorBehaviorTests.cs`
+- `tests/src/Kcli.Tests/CoreDemoTests.cs`
+- `tests/src/Kcli.Tests/OmegaDemoTests.cs`
 - `demo/sdk/alpha/src/Kcli/Demo/Alpha/AlphaSdk.cs`
 - `demo/exe/core/src/Kcli/Demo/Core/Program.cs`
 - `demo/exe/omega/src/Kcli/Demo/Omega/Program.cs`

@@ -5,6 +5,7 @@ primarily:
 
 - [`src/Ktrace/TraceLogger.cs`](../src/Ktrace/TraceLogger.cs)
 - [`src/Ktrace/Logger.cs`](../src/Ktrace/Logger.cs)
+- [`src/Ktrace/Logger.TraceCli.cs`](../src/Ktrace/Logger.TraceCli.cs)
 - [`src/Ktrace/TraceSelector.cs`](../src/Ktrace/TraceSelector.cs)
 - [`src/Ktrace/TraceFormatter.cs`](../src/Ktrace/TraceFormatter.cs)
 

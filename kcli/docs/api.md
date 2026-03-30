@@ -6,6 +6,10 @@ primarily:
 - [`src/Kcli/Parser.cs`](../src/Kcli/Parser.cs)
 - [`src/Kcli/InlineParser.cs`](../src/Kcli/InlineParser.cs)
 - [`src/Kcli/ParseEngine.cs`](../src/Kcli/ParseEngine.cs)
+- [`src/Kcli/ParseEngine.Scheduling.cs`](../src/Kcli/ParseEngine.Scheduling.cs)
+- [`src/Kcli/ParseEngine.TokenCollection.cs`](../src/Kcli/ParseEngine.TokenCollection.cs)
+- [`src/Kcli/ParseEngine.Execution.cs`](../src/Kcli/ParseEngine.Execution.cs)
+- [`src/Kcli/ParseEngine.Help.cs`](../src/Kcli/ParseEngine.Help.cs)
 
 ## Core Types
 

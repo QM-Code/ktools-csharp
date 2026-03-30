@@ -9,6 +9,8 @@ internal static class ValueHandlingTests
     {
         TestRequiredValueAcceptsOptionLikeFirstToken();
         TestRequiredValueRejectsMissingValue();
+        TestRequiredValuePreservesSurroundingWhitespace();
+        TestRequiredValueAcceptsExplicitEmptyValue();
         TestRequiredValuePreservesShellWhitespace();
         TestOptionalValueHandlerAllowsMissingValue();
         TestOptionalValueHandlerAcceptsExplicitEmptyValue();
@@ -39,6 +41,43 @@ internal static class ValueHandlingTests
 
         TestAssert.Equal(error.Option, "--output", "missing required values should report the failing option");
         TestAssert.Contains(error.Message, "requires a value", "missing required values should describe the contract");
+    }
+
+    private static void TestRequiredValuePreservesSurroundingWhitespace()
+    {
+        string captured = string.Empty;
+        List<string> tokens = new List<string>();
+
+        Parser parser = new Parser();
+        parser.SetHandler("--name", (context, value) =>
+        {
+            captured = value;
+            tokens.AddRange(context.ValueTokens);
+        }, "Set the display name.");
+
+        parser.ParseOrThrow(new[] { "--name", " Joe " });
+
+        TestAssert.Equal(captured, " Joe ", "required values should preserve shell-provided surrounding whitespace");
+        TestAssert.Equal(string.Join("|", tokens), " Joe ", "value tokens should preserve surrounding whitespace");
+    }
+
+    private static void TestRequiredValueAcceptsExplicitEmptyValue()
+    {
+        string captured = "unset";
+        List<string> tokens = new List<string>();
+
+        Parser parser = new Parser();
+        parser.SetHandler("--name", (context, value) =>
+        {
+            captured = value;
+            tokens.AddRange(context.ValueTokens);
+        }, "Set the display name.");
+
+        parser.ParseOrThrow(new[] { "--name", string.Empty });
+
+        TestAssert.Equal(captured, string.Empty, "required values should accept explicit empty strings");
+        TestAssert.Equal(string.Join("|", tokens), string.Empty, "required-value context tokens should preserve explicit empty values");
+        TestAssert.Equal(tokens.Count, 1, "explicit empty required values should still count as one token");
     }
 
     private static void TestRequiredValuePreservesShellWhitespace()
